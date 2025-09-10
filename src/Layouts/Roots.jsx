@@ -1,11 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router";
+import Navbar from "../Components/Navbar/Navbar";
 
 const Roots = () => {
   return (
     <div>
       {/* header */}
-      <div>navbar</div>
+      <div>
+        <Navbar></Navbar>
+      </div>
       {/* main */}
       <div>
         <Outlet></Outlet>
