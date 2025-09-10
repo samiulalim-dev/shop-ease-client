@@ -7,9 +7,7 @@ const Navbar = () => {
   return (
     <section>
       {/* start navbar */}
-      <div></div>
-      {/* center navbar */}
-      <div className="bg-[#003F62] shadow-sm sticky top-0 z-50">
+      <div className="bg-[#003F62] shadow-sm ">
         <div className="navbar justify-between px-1 sm:w-11/12 mx-auto">
           {/* LEFT SIDE */}
           <div className="flex items-center gap-23 sm:flex-1">
@@ -23,7 +21,7 @@ const Navbar = () => {
                 placeholder="Search products..."
                 className="input rounded-r-none input-bordered w-full rounded-l-xl focus:outline-none"
               />
-              <button className="btn bg-[#EDA415] hover:bg-orange-500 border-none rounded-l-none rounded-r-xl text-white">
+              <button className="btn shadow-none bg-[#EDA415] hover:bg-orange-500 border-none rounded-l-none rounded-r-xl text-white">
                 Search
               </button>
             </div>
@@ -48,8 +46,6 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-
-        {/* Search bar for mobile view */}
       </div>
       {/* end navbar */}
       <div></div>
