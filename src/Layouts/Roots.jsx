@@ -12,19 +12,15 @@ const Roots = () => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      // Top থেকে 50px নিচে নামলে main navbar sticky হবে
       if (currentScroll > 50) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
       }
 
-      // যদি user নিচের দিকে scroll করে তবে top navbar hide হবে
       if (currentScroll > lastScrollY && currentScroll > 100) {
         setShowTopNav(false);
-      }
-      // যদি user উপরের দিকে scroll করে এবং scroll কম হয় (top এ আসছে)
-      else if (
+      } else if (
         currentScroll < lastScrollY &&
         currentScroll < window.innerHeight * 0.1
       ) {
@@ -43,7 +39,7 @@ const Roots = () => {
       {/* top navbar */}
       <section className=" hidden lg:block">
         <div
-          className={`text-black max-w-screen-xl mx-auto py-5 flex items-center justify-between ${
+          className={`text-black container px-1 mx-auto py-5 flex items-center justify-between ${
             showTopNav ? "translate-y-0" : "-translate-y-full"
           }`}
         >
@@ -57,7 +53,12 @@ const Roots = () => {
           </div>
         </div>
       </section>
-      <div className={isSticky ? "sticky top-0 z-50" : ""}>
+      {/* center navbar */}
+      <div
+        className={` sticky top-0 z-50  lg:${
+          isSticky ? "sticky top-0 z-50" : ""
+        }`}
+      >
         <Navbar></Navbar>
       </div>
       {/* main */}

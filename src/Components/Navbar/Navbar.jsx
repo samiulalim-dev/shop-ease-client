@@ -2,13 +2,14 @@ import React from "react";
 import Logo from "../../Shared/Logo/Logo";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router";
+import SubNavbar from "./Subnavbar";
 
 const Navbar = () => {
   return (
     <section>
       {/* start navbar */}
       <div className="bg-[#003F62] shadow-sm ">
-        <div className="navbar justify-between px-1 sm:w-11/12 mx-auto">
+        <div className="navbar justify-between px-1 sm:max-w-screen-xl mx-auto">
           {/* LEFT SIDE */}
           <div className="flex items-center gap-23 sm:flex-1">
             {/* Logo */}
@@ -47,8 +48,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {/* end navbar */}
-      <div></div>
+      {/* sub navbar */}
+      <div>
+        <SubNavbar></SubNavbar>
+      </div>
     </section>
   );
 };
