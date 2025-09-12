@@ -97,10 +97,10 @@ const CategorySlider = () => {
               <div className="divider divider-horizontal divider-start"></div>
               {/* Right: Info */}
               <div>
-                <h3 className="font-semibold text-lg text-gray-800">
+                <h3 className="font-semibold text-lg text-[#003F62]">
                   {cat.name}
                 </h3>
-                <p className="text-sm text-gray-500">{cat.items} items</p>
+                <p className="text-sm text-[#003F62]">( {cat.items} items )</p>
               </div>
             </div>
           </div>
