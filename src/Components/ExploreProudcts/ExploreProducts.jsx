@@ -25,7 +25,7 @@ const ExploreProducts = () => {
 
   return (
     <section className="max-w-screen-xl mx-auto px-4 py-12">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+      <h2 className="pb-8 text-[#003F62] text-3xl font-bold text-center">
         Explore Our Products
       </h2>
 
@@ -43,7 +43,7 @@ const ExploreProducts = () => {
             />
             <h3 className="font-semibold text-gray-700">{product.name}</h3>
             <p className="text-[#EDA415] font-bold">${product.price}</p>
-            <button className="mt-3 px-4 py-2 bg-[#EDA415] text-white rounded-lg hover:bg-orange-500 transition">
+            <button className="mt-3 cursor-pointer px-4 py-2 bg-[#EDA415] text-white rounded-lg hover:bg-orange-500 transition">
               Add to Cart
             </button>
           </div>

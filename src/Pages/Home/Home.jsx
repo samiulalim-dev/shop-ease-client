@@ -4,6 +4,7 @@ import CategorySlider from "../../Components/CategorySlider/CategorySlider";
 import PopularProducts from "../../Components/PopularProducts/PopularProducts";
 import ExperienceBanner from "../../Components/ExperienceBanner/ExperienceBanner";
 import ExploreProducts from "../../Components/ExploreProudcts/ExploreProducts";
+import NewArrival from "../../Components/NewArrival/NewArrival";
 
 const Home = () => {
   return (
@@ -27,6 +28,10 @@ const Home = () => {
       {/* explore our products */}
       <section>
         <ExploreProducts></ExploreProducts>
+      </section>
+      {/* new arrival section */}
+      <section>
+        <NewArrival></NewArrival>
       </section>
     </div>
   );
