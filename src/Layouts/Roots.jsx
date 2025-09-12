@@ -66,7 +66,7 @@ const Roots = () => {
         <Outlet></Outlet>
       </div>
       {/* footer */}
-      <div>Footer</div>
+      <div></div>
     </div>
   );
 };
