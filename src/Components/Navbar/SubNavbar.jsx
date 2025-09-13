@@ -17,7 +17,9 @@ const SubNavbar = () => {
       <Link to="/contacts" className="hover:text-[#EDA415]">
         Contact
       </Link>
-      <Link className="hover:text-[#EDA415]">About Us</Link>
+      <Link to="/aboutUs" className="hover:text-[#EDA415]">
+        About Us
+      </Link>
     </>
   );
 
