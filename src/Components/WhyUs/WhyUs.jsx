@@ -35,12 +35,12 @@ const WhyUs = () => {
 
   return (
     <section className="max-w-screen-xl mx-auto px-4   my-12">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-blue-200 rounded-2xl  overflow-hidden">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 bg-blue-200 rounded-2xl  overflow-hidden">
         {items.map((item) => (
           <div
             key={item.id}
             data-aos={item.animation}
-            className="flex flex-col items-center text-center p-6 hover:shadow-lg transition-shadow duration-300"
+            className="flex flex-col items-center text-center p-6 "
           >
             {item.icon}
             <h3 className="mt-4 text-lg font-semibold text-[#003F62]">

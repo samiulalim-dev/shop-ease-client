@@ -17,7 +17,7 @@ const Logo = () => {
       <div className="flex flex-col items-start">
         <h1 className="text-lg md:text-[27px] font-bold  leading-none bg-gradient-to-r from-[#EDA415] to-[#FF6B00] bg-clip-text text-transparent">
           <span className="  transition-all duration-300 ">Shop</span>
-          <span className="sm:ml-1">Expo</span>
+          <span className="sm:ml-1">Ease</span>
         </h1>
         <div className="h-1 w-0 bg-gradient-to-r from-[#EDA415] to-[#FF6B00]  group-hover:w-full transition-all duration-500 mt-1"></div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router";
 import Navbar from "../Components/Navbar/Navbar";
+import Footer from "../Components/Footer/Footer";
 
 const Roots = () => {
   const [showTopNav, setShowTopNav] = useState(true);
@@ -66,7 +67,9 @@ const Roots = () => {
         <Outlet></Outlet>
       </div>
       {/* footer */}
-      <div></div>
+      <div>
+        <Footer></Footer>
+      </div>
     </div>
   );
 };

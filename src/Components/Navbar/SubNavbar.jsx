@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../Shared/Logo/Logo";
 import { motion, AnimatePresence } from "framer-motion";
+import Search from "../../Shared/Search/Search";
 const SubNavbar = () => {
   const [openRightMenu, setOpenRightMenu] = useState(false);
   const [openLeftDrawer, setOpenLeftDrawer] = useState(false);
@@ -20,6 +21,7 @@ const SubNavbar = () => {
         {/* CENTER - Links (Desktop) */}
         <div className="hidden lg:flex items-center gap-6 font-medium text-gray-700">
           <Link className="hover:text-[#EDA415]">Home</Link>
+          <Link className="hover:text-[#EDA415]">Products</Link>
           <Link className="hover:text-[#EDA415]">Contact</Link>
           <Link className="hover:text-[#EDA415]">About Us</Link>
         </div>
@@ -114,6 +116,7 @@ const SubNavbar = () => {
               {" "}
               30 Days Easy Return{" "}
             </p>{" "}
+            <Search></Search>
           </motion.ul>{" "}
         </div>
       )}

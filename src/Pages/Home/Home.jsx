@@ -6,6 +6,7 @@ import ExperienceBanner from "../../Components/ExperienceBanner/ExperienceBanner
 import ExploreProducts from "../../Components/ExploreProudcts/ExploreProducts";
 import NewArrival from "../../Components/NewArrival/NewArrival";
 import WhyUs from "../../Components/WhyUs/WhyUs";
+import BrandsShowcase from "../../Components/BrandShowcase/BrandShowcase";
 
 const Home = () => {
   return (
@@ -37,6 +38,10 @@ const Home = () => {
       {/* why us section */}
       <section>
         <WhyUs></WhyUs>
+      </section>
+      {/* brand showcase */}
+      <section>
+        <BrandsShowcase></BrandsShowcase>
       </section>
     </div>
   );

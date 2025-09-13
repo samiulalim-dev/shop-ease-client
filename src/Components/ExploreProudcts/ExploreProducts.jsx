@@ -34,6 +34,7 @@ const ExploreProducts = () => {
         {currentProducts.map((product) => (
           <div
             key={product.id}
+            data-aos="fade-up"
             className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col items-center"
           >
             <img

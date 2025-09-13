@@ -3,6 +3,7 @@ import Logo from "../../Shared/Logo/Logo";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router";
 import SubNavbar from "./Subnavbar";
+import Search from "../../Shared/Search/Search";
 
 const Navbar = () => {
   return (
@@ -16,15 +17,8 @@ const Navbar = () => {
             <Logo />
 
             {/* Search field (hidden on mobile) */}
-            <div className="hidden lg:flex items-center flex-1 max-w-md">
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="input rounded-r-none input-bordered w-full rounded-l-xl focus:outline-none"
-              />
-              <button className="btn shadow-none bg-[#EDA415] hover:bg-orange-500 border-none rounded-l-none rounded-r-xl text-white">
-                Search
-              </button>
+            <div className=" hidden lg:block">
+              <Search></Search>
             </div>
           </div>
 
