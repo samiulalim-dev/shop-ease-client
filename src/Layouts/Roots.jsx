@@ -40,7 +40,7 @@ const Roots = () => {
       {/* top navbar */}
       <section className=" hidden lg:block">
         <div
-          className={`text-black container px-1 mx-auto py-5 flex items-center justify-between ${
+          className={`text-black dark:text-white container px-1 mx-auto py-5 flex items-center justify-between ${
             showTopNav ? "translate-y-0" : "-translate-y-full"
           }`}
         >

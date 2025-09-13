@@ -34,7 +34,7 @@ const NewArrival = () => {
   return (
     <section className="max-w-screen-xl mx-auto px-4 pb-6 sm:py-12 overflow-hidden">
       <h2
-        className="pb-8 text-[#003F62] text-3xl font-bold text-center"
+        className="pb-8 dark:text-white text-[#003F62] text-3xl font-bold text-center"
         data-aos="fade-up"
       >
         New Arrivals

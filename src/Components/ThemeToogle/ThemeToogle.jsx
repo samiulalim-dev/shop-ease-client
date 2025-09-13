@@ -4,13 +4,21 @@ import { MdDarkMode } from "react-icons/md";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
   useEffect(() => {
-    document.documentElement.classList.add("dark");
-    document.documentElement.setAttribute("data-theme", theme);
-
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  //   useEffect(() => {
+  //     document.documentElement.classList.add("dark");
+  //     document.documentElement.setAttribute("data-theme", theme);
+
+  //     localStorage.setItem("theme", theme);
+  //   }, [theme]);
 
   const handleToggle = () => {
     setTheme(theme === "light" ? "dark" : "light");

@@ -25,7 +25,7 @@ const ExploreProducts = () => {
 
   return (
     <section className="max-w-screen-xl mx-auto px-4 py-12">
-      <h2 className="pb-8 text-[#003F62] text-3xl font-bold text-center">
+      <h2 className="pb-8 dark:text-white text-[#003F62] text-3xl font-bold text-center">
         Explore Our Products
       </h2>
 
@@ -56,7 +56,7 @@ const ExploreProducts = () => {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 border rounded-lg disabled:opacity-50"
+          className="px-3 text-black cursor-pointer dark:text-white py-1 border border-black dark:border-white rounded-lg disabled:opacity-50"
         >
           Prev
         </button>
@@ -80,7 +80,7 @@ const ExploreProducts = () => {
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-3 py-1 border rounded-lg disabled:opacity-50"
+          className="px-3 py-1 border text-black dark:text-white cursor-pointer border-black dark:border-white rounded-lg disabled:opacity-50"
         >
           Next
         </button>

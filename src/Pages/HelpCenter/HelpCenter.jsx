@@ -32,16 +32,16 @@ const HelpCenter = () => {
     <div className="max-w-screen-xl mx-auto px-4 py-10">
       {/* Heading */}
       <div className="text-center mb-10" data-aos="fade-down">
-        <h1 className="text-3xl md:text-4xl font-bold text-[#003F62] mb-3">
+        <h1 className="text-3xl md:text-4xl font-bold dark:text-white text-[#003F62] mb-3">
           Welcome to the ShopExpo Help Center
         </h1>
-        <p className="text-gray-600">
+        <p className="dark:text-white text-gray-600">
           Find answers to your questions or get in touch with our support team.
         </p>
       </div>
 
       <div
-        className="max-w-lg mx-auto mb-10 flex items-center border  rounded-lg shadow-sm"
+        className="max-w-lg mx-auto mb-10 flex items-center border border-black dark:border-white  rounded-lg shadow-sm"
         data-aos="zoom-in"
       >
         <input
@@ -72,10 +72,10 @@ const HelpCenter = () => {
 
       {/* Contact Support */}
       <div className="text-center mt-12" data-aos="fade-up">
-        <h2 className="text-2xl font-bold text-[#003F62] mb-3">
+        <h2 className="text-2xl font-bold dark:text-white text-[#003F62] mb-3">
           Still need help?
         </h2>
-        <p className="text-gray-600 mb-5">
+        <p className="dark:text-white text-gray-600 mb-5">
           Our support team is here to assist you 24/7.
         </p>
         <button className="px-6 py-3 cursor-pointer bg-[#EDA415] text-white font-semibold rounded-lg shadow-md hover:bg-orange-500 transition">
