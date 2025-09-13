@@ -4,6 +4,7 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router";
 import SubNavbar from "./Subnavbar";
 import Search from "../../Shared/Search/Search";
+import ThemeToggle from "../ThemeToogle/ThemeToogle";
 
 const Navbar = () => {
   return (
@@ -23,7 +24,10 @@ const Navbar = () => {
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="navbar-end gap-2 sm:gap-5">
+          <div className="navbar-end  gap-2 sm:gap-4">
+            <div className="hidden  items-center md:flex">
+              <ThemeToggle></ThemeToggle>
+            </div>
             {/* Wishlist */}
             <button className="relative cursor-pointer text-white hover:text-[#EDA415]">
               <FaHeart size={20} />

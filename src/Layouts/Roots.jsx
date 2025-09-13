@@ -49,7 +49,9 @@ const Roots = () => {
             Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!{" "}
           </p>
           <div className="flex gap-6">
-            <Link className="hover:text-[#EDA415]">Help Center</Link>
+            <Link to="/help-center" className="hover:text-[#EDA415]">
+              Help Center
+            </Link>
             <Link className="hover:text-[#EDA415]">Track Your Order</Link>
           </div>
         </div>

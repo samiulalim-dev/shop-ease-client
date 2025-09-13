@@ -3,7 +3,7 @@ import React from "react";
 const PopularProducts = () => {
   return (
     <div className=" max-w-screen-xl px-3 mx-auto my-2 md:my-14">
-      <h2 className=" pb-8 text-[#003F62] text-3xl font-bold">
+      <h2 className=" pb-8 text-[#003F62] dark:text-white text-3xl font-bold">
         Popular Products
       </h2>
       <div className=" grid  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
