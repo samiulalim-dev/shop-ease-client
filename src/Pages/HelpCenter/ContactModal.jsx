@@ -32,7 +32,7 @@ const ContactModal = ({ onClose }) => {
           ></textarea>
           <button
             type="submit"
-            className="px-4 py-2 cursor-pointer bg-[#EDA415] hover:bg-orange-500 rounded text-white font-semibold"
+            className="px-4 py-2 cursor-pointer bg-[#EDA415] hover:bg-orange-500 rounded-lg text-white font-semibold"
           >
             Send Message
           </button>

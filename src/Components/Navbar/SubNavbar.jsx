@@ -8,6 +8,19 @@ const SubNavbar = () => {
   const [openRightMenu, setOpenRightMenu] = useState(false);
   const [openLeftDrawer, setOpenLeftDrawer] = useState(false);
 
+  const navLinks = (
+    <>
+      <Link to="/" className="hover:text-[#EDA415]">
+        Home
+      </Link>
+      <Link className="hover:text-[#EDA415]">Products</Link>
+      <Link to="/contacts" className="hover:text-[#EDA415]">
+        Contact
+      </Link>
+      <Link className="hover:text-[#EDA415]">About Us</Link>
+    </>
+  );
+
   return (
     <div className=" py-3 bg-slate-100 shadow-md">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 sm:px-5 py-2">
@@ -20,10 +33,7 @@ const SubNavbar = () => {
         </button>
         {/* CENTER - Links (Desktop) */}
         <div className="hidden lg:flex items-center gap-6 font-medium text-gray-700">
-          <Link className="hover:text-[#EDA415]">Home</Link>
-          <Link className="hover:text-[#EDA415]">Products</Link>
-          <Link className="hover:text-[#EDA415]">Contact</Link>
-          <Link className="hover:text-[#EDA415]">About Us</Link>
+          {navLinks}
         </div>
         {/* RIGHT - Info (Desktop) */}
         <div className="hidden lg:block text-sm font-semibold text-[#003F62]">
@@ -109,9 +119,7 @@ const SubNavbar = () => {
             className="flex flex-col p-3 gap-2 font-medium text-gray-700"
           >
             {" "}
-            <Link className="hover:text-[#EDA415]">Home</Link>{" "}
-            <Link className="hover:text-[#EDA415]">Contact</Link>{" "}
-            <Link className="hover:text-[#EDA415]">About Us</Link>{" "}
+            {navLinks}
             <p className="text-sm font-medium text-[#003F62] mt-2">
               {" "}
               30 Days Easy Return{" "}

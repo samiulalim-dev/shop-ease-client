@@ -49,7 +49,7 @@ const HelpCenter = () => {
         <input
           type="text"
           placeholder="Search your query..."
-          className="flex-1 px-4 py-2 rounded-l-lg focus:outline-none"
+          className="flex-1 text-black dark:text-white px-4 py-2 rounded-l-lg focus:outline-none"
         />
         <button className="px-4 py-2 bg-[#EDA415] cursor-pointer text-white rounded-r-lg hover:bg-orange-500 transition">
           Search
