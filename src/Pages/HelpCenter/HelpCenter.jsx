@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import ContactModal from "./ContactModal";
 
 const HelpCenter = () => {
+  const [showContactModal, setShowContactModal] = useState(false);
   const faqs = [
     {
       id: 1,
@@ -78,10 +80,16 @@ const HelpCenter = () => {
         <p className="dark:text-white text-gray-600 mb-5">
           Our support team is here to assist you 24/7.
         </p>
-        <button className="px-6 py-3 cursor-pointer bg-[#EDA415] text-white font-semibold rounded-lg shadow-md hover:bg-orange-500 transition">
+        <button
+          onClick={() => setShowContactModal(true)}
+          className="px-6 py-3 cursor-pointer bg-[#EDA415] text-white font-semibold rounded-lg shadow-md hover:bg-orange-500 transition"
+        >
           Contact Support
         </button>
       </div>
+      {showContactModal && (
+        <ContactModal onClose={() => setShowContactModal(false)} />
+      )}
     </div>
   );
 };

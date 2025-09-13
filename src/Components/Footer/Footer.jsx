@@ -6,12 +6,13 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import Logo from "../../Shared/Logo/Logo";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300">
       {/* Main Footer */}
-      <div className="max-w-screen-xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="max-w-screen-xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-9">
         {/* Brand */}
         <div>
           <div className=" flex justify-items-start">
@@ -60,9 +61,9 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/shipping" className="hover:text-[#EDA415]">
-                Shipping
-              </a>
+              <Link to="/help-center" className="hover:text-[#EDA415]">
+                Help Center
+              </Link>
             </li>
             <li>
               <a href="/returns" className="hover:text-[#EDA415]">

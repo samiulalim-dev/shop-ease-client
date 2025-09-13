@@ -11,7 +11,7 @@ const Navbar = () => {
     <section>
       {/* start navbar */}
       <div className="bg-[#003F62] shadow-sm ">
-        <div className="navbar justify-between px-1 sm:max-w-screen-xl mx-auto">
+        <div className="navbar justify-between px-2 sm:max-w-screen-xl mx-auto">
           {/* LEFT SIDE */}
           <div className="flex items-center gap-23 sm:flex-1">
             {/* Logo */}
@@ -25,7 +25,7 @@ const Navbar = () => {
 
           {/* RIGHT SIDE */}
           <div className="navbar-end  gap-2 sm:gap-4">
-            <div className="hidden  items-center md:flex">
+            <div className="  items-center flex">
               <ThemeToggle></ThemeToggle>
             </div>
             {/* Wishlist */}
@@ -39,9 +39,12 @@ const Navbar = () => {
             </button>
 
             {/* Login/Register */}
-            <div className=" text-white">
-              <Link className="  hover:text-[#EDA415]">Login</Link> |{" "}
-              <Link className="  hover:text-[#EDA415]">Register</Link>
+            <div className=" flex items-center gap-1 text-white">
+              <Link className="  hover:text-[#EDA415]">Login</Link>{" "}
+              <span className="sm:block hidden">|</span>{" "}
+              <Link className=" sm:block hidden  hover:text-[#EDA415]">
+                Register
+              </Link>
             </div>
           </div>
         </div>
