@@ -39,12 +39,12 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/about" className="hover:text-[#EDA415]">
+              <a href="/aboutUs" className="hover:text-[#EDA415]">
                 About Us
               </a>
             </li>
             <li>
-              <a href="/contact" className="hover:text-[#EDA415]">
+              <a href="/contacts" className="hover:text-[#EDA415]">
                 Contact
               </a>
             </li>
@@ -56,25 +56,13 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white">Customer Support</h3>
           <ul className="mt-4 space-y-2 text-sm">
             <li>
-              <a href="/faq" className="hover:text-[#EDA415]">
-                FAQ
-              </a>
-            </li>
-            <li>
               <Link to="/help-center" className="hover:text-[#EDA415]">
                 Help Center
               </Link>
             </li>
-            <li>
-              <a href="/returns" className="hover:text-[#EDA415]">
-                Returns
-              </a>
-            </li>
-            <li>
-              <a href="/privacy" className="hover:text-[#EDA415]">
-                Privacy Policy
-              </a>
-            </li>
+            <li>call: +880-1234-000000.</li>
+
+            <li>email: support@shopexpo.com</li>
           </ul>
         </div>
 
