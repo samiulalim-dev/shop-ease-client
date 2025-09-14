@@ -11,7 +11,7 @@ const ContactModal = ({ onClose }) => {
           ✕
         </button>
 
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
+        <h2 className="text-xl font-bold text-[#003F62] dark:text-white mb-4">
           Contact Support
         </h2>
 

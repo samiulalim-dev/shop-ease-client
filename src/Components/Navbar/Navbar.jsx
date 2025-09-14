@@ -2,9 +2,9 @@ import React from "react";
 import Logo from "../../Shared/Logo/Logo";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router";
-import SubNavbar from "./Subnavbar";
 import Search from "../../Shared/Search/Search";
 import ThemeToggle from "../ThemeToogle/ThemeToogle";
+import SubNavbar from "./SubNavbar";
 
 const Navbar = () => {
   return (
@@ -40,9 +40,14 @@ const Navbar = () => {
 
             {/* Login/Register */}
             <div className=" flex items-center gap-1 text-white">
-              <Link className="  hover:text-[#EDA415]">Login</Link>{" "}
+              <Link to="/login" className="  hover:text-[#EDA415]">
+                Login
+              </Link>{" "}
               <span className="sm:block hidden">|</span>{" "}
-              <Link className=" sm:block hidden  hover:text-[#EDA415]">
+              <Link
+                to="/register"
+                className=" sm:block hidden  hover:text-[#EDA415]"
+              >
                 Register
               </Link>
             </div>

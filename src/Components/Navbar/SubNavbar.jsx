@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../Shared/Logo/Logo";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,16 +10,57 @@ const SubNavbar = () => {
 
   const navLinks = (
     <>
-      <Link to="/" className="hover:text-[#EDA415]">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `hover:text-[#EDA415] ${
+            isActive ? "text-[#EDA415]" : "text-gray-700"
+          }`
+        }
+      >
         Home
-      </Link>
-      <Link className="hover:text-[#EDA415]">Products</Link>
-      <Link to="/contacts" className="hover:text-[#EDA415]">
+      </NavLink>
+      <NavLink
+        to="/products"
+        className={({ isActive }) =>
+          `hover:text-[#EDA415] ${
+            isActive ? "text-[#EDA415]" : "text-gray-700"
+          }`
+        }
+      >
+        Products
+      </NavLink>
+      <NavLink
+        to="/contacts"
+        className={({ isActive }) =>
+          `hover:text-[#EDA415] ${
+            isActive ? "text-[#EDA415]" : "text-gray-700"
+          }`
+        }
+      >
         Contact
-      </Link>
-      <Link to="/aboutUs" className="hover:text-[#EDA415]">
+      </NavLink>
+
+      <NavLink
+        to="/aboutUs"
+        className={({ isActive }) =>
+          `hover:text-[#EDA415] ${
+            isActive ? "text-[#EDA415]" : "text-gray-700"
+          }`
+        }
+      >
         About Us
-      </Link>
+      </NavLink>
+      <NavLink
+        to="/dashBoard"
+        className={({ isActive }) =>
+          `hover:text-[#EDA415] ${
+            isActive ? "text-[#EDA415]" : "text-gray-700"
+          }`
+        }
+      >
+        Dashboard
+      </NavLink>
     </>
   );
 
