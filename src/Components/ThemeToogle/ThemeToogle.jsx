@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CiLight } from "react-icons/ci";
-import { MdDarkMode } from "react-icons/md";
+import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -27,8 +27,8 @@ const ThemeToggle = () => {
   return (
     <button onClick={handleToggle} className=" cursor-pointer">
       {theme === "light" ? (
-        <div className="text-gray-500">
-          <MdDarkMode size={30} />
+        <div className="text-white ">
+          <MdOutlineDarkMode size={30} />
         </div>
       ) : (
         <div>

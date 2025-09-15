@@ -3,6 +3,7 @@ import Lottie from "lottie-react";
 import loginAnimation from "../../assets/lottieFiles/login.json";
 import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import GoogleSignin from "../../Shared/GoogleSignin/GoogleSignin";
 
 const LoginPage = () => {
   return (
@@ -68,12 +69,7 @@ const LoginPage = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="w-full flex cursor-pointer items-center justify-center gap-2 py-2 border border-[#EDA415] rounded-lg shadow-sm hover:bg-gray-100 transition">
-          <FcGoogle className="text-xl" />
-          <span className="text-sm font-medium text-gray-700">
-            Continue with Google
-          </span>
-        </button>
+        <GoogleSignin></GoogleSignin>
       </div>
 
       {/* google login */}

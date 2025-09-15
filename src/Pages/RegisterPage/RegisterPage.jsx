@@ -1,13 +1,11 @@
-import React from "react";
+import React, { use } from "react";
 import Lottie from "lottie-react";
 import { FcGoogle } from "react-icons/fc";
 import registerAnimation from "../../assets/lottieFiles/registerAnimation.json";
+import GoogleSignin from "../../Shared/GoogleSignin/GoogleSignin";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const RegisterPage = () => {
-  const handleGoogleRegister = () => {
-    console.log("Google Register Clicked");
-  };
-
   return (
     <div className="min-h-screen flex flex-col md:flex-row py-16 items-center justify-center bg-gray-50 px-4 sm:px-8 lg:px-16">
       {/* LEFT - Form */}
@@ -81,15 +79,7 @@ const RegisterPage = () => {
         </div>
 
         {/* Google Register Button */}
-        <button
-          onClick={handleGoogleRegister}
-          className="w-full flex items-center justify-center cursor-pointer gap-2 py-2 border border-[#EDA415] rounded-lg shadow-sm hover:bg-gray-100 transition"
-        >
-          <FcGoogle className="text-xl" />
-          <span className="text-sm font-medium text-gray-700">
-            Continue with Google
-          </span>
-        </button>
+        <GoogleSignin></GoogleSignin>
 
         {/* Already Have an Account */}
         <p className="text-sm text-gray-600 mt-5 text-center">
