@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router";
 import Navbar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Roots = () => {
   const [showTopNav, setShowTopNav] = useState(true);
@@ -34,6 +35,7 @@ const Roots = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div>
       {/* header */}
