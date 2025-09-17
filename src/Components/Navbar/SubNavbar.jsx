@@ -56,7 +56,7 @@ const SubNavbar = () => {
       )}
       {!user && (
         <NavLink
-          to="/contacts"
+          to="/becomeSeller"
           className={({ isActive }) =>
             `hover:text-[#EDA415] ${
               isActive ? "text-[#EDA415]" : "text-gray-700"

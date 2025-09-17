@@ -73,7 +73,7 @@ const HelpCenter = () => {
       </div>
 
       {/* Contact Support */}
-      <div className="text-center mt-12" data-aos="fade-up">
+      <div className="text-center mt-12">
         <h2 className="text-2xl font-bold dark:text-white text-[#003F62] mb-3">
           Still need help?
         </h2>
