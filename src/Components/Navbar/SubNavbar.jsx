@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../Shared/Logo/Logo";
 import { motion, AnimatePresence } from "framer-motion";
 import Search from "../../Shared/Search/Search";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 const SubNavbar = () => {
   const [openRightMenu, setOpenRightMenu] = useState(false);
   const [openLeftDrawer, setOpenLeftDrawer] = useState(false);
-
+  const { user } = use(AuthContext);
   const navLinks = (
     <>
       <NavLink
@@ -51,16 +52,18 @@ const SubNavbar = () => {
       >
         About Us
       </NavLink>
-      <NavLink
-        to="/dashBoard"
-        className={({ isActive }) =>
-          `hover:text-[#EDA415] ${
-            isActive ? "text-[#EDA415]" : "text-gray-700"
-          }`
-        }
-      >
-        Dashboard
-      </NavLink>
+      {user && (
+        <NavLink
+          to="/dashBoard"
+          className={({ isActive }) =>
+            `hover:text-[#EDA415] ${
+              isActive ? "text-[#EDA415]" : "text-gray-700"
+            }`
+          }
+        >
+          Dashboard
+        </NavLink>
+      )}
     </>
   );
 
