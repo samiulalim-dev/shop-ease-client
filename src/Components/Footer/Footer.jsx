@@ -5,6 +5,7 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import { MdArrowOutward } from "react-icons/md";
 import Logo from "../../Shared/Logo/Logo";
 import { Link } from "react-router";
 
@@ -56,8 +57,11 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white">Customer Support</h3>
           <ul className="mt-4 space-y-2 text-sm">
             <li>
-              <Link to="/help-center" className="hover:text-[#EDA415]">
-                Help Center
+              <Link
+                to="/help-center"
+                className="hover:text-[#EDA415] flex gap-1 items-center"
+              >
+                Help Center <MdArrowOutward />
               </Link>
             </li>
             <li>call: +880-1234-000000.</li>

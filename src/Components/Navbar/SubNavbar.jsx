@@ -31,16 +31,6 @@ const SubNavbar = () => {
       >
         Products
       </NavLink>
-      <NavLink
-        to="/contacts"
-        className={({ isActive }) =>
-          `hover:text-[#EDA415] ${
-            isActive ? "text-[#EDA415]" : "text-gray-700"
-          }`
-        }
-      >
-        Contact
-      </NavLink>
 
       <NavLink
         to="/aboutUs"
@@ -62,6 +52,18 @@ const SubNavbar = () => {
           }
         >
           Dashboard
+        </NavLink>
+      )}
+      {!user && (
+        <NavLink
+          to="/contacts"
+          className={({ isActive }) =>
+            `hover:text-[#EDA415] ${
+              isActive ? "text-[#EDA415]" : "text-gray-700"
+            }`
+          }
+        >
+          Become a Seller
         </NavLink>
       )}
     </>
