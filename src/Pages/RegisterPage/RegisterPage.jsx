@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import { FcGoogle } from "react-icons/fc";
 import registerAnimation from "../../assets/lottieFiles/registerAnimation.json";
@@ -8,12 +8,16 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../../Hooks/AxiosSecure/useAxiosSecure";
+import useAxios from "../../Hooks/useAxios/useAxios";
 
 const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(null);
   const { createUser, updateUser, setUser } = use(AuthContext);
+  const axiosInstance = useAxios();
+
   const {
     register,
     handleSubmit,
@@ -57,7 +61,7 @@ const RegisterPage = () => {
           .then((result) => {
             updateUser(name, photoUrl)
               .then(() => {
-                console.log("User updated with name & photo");
+                // console.log("User updated with name & photo");
               })
               .catch((error) => {
                 console.error("Update failed:", error.message);
@@ -69,7 +73,20 @@ const RegisterPage = () => {
               displayName: name,
               photoURL: photoUrl,
             });
-
+            axiosInstance
+              .post("/user", {
+                name: name,
+                email: email,
+                photo: photoUrl,
+                role: "user",
+                createdAt: new Date(),
+              })
+              .then((res) => {
+                // console.log(res.data);
+              })
+              .catch((error) => {
+                console.log("Failed to save user to DB:", error);
+              });
             toast.success("User created successfully!");
             navigate("/");
             reset();

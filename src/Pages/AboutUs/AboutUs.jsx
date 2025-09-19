@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import aboutImg from "../../assets/about-us.jpg";
 import { RiFocus2Line } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
