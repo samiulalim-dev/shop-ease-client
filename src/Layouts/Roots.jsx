@@ -3,10 +3,12 @@ import { Link, Outlet } from "react-router";
 import Navbar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import Loading from "../Shared/LoadingSpinner/LoadingSpinner";
 
 const Roots = () => {
   const [showTopNav, setShowTopNav] = useState(true);
   const [isSticky, setIsSticky] = useState(false);
+  const { loading } = use(AuthContext);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -35,6 +37,10 @@ const Roots = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div>

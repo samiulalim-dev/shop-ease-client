@@ -44,7 +44,7 @@ const SubNavbar = () => {
       </NavLink>
       {user && (
         <NavLink
-          to="/dashBoard"
+          to="/dashboard"
           className={({ isActive }) =>
             `hover:text-[#EDA415] ${
               isActive ? "text-[#EDA415]" : "text-gray-700"

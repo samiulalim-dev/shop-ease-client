@@ -7,6 +7,9 @@ import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import BecomeSeller from "../Pages/BecomeSeller/BecomeSeller";
+import React from "react";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -40,5 +43,13 @@ export const router = createBrowserRouter([
         Component: RegisterPage,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
   },
 ]);

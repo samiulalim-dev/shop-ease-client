@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import useAxiosSecure from "../../Hooks/AxiosSecure/useAxiosSecure";
 import useAxios from "../../Hooks/useAxios/useAxios";
 
@@ -16,7 +16,9 @@ const RegisterPage = () => {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(null);
   const { createUser, updateUser, setUser } = use(AuthContext);
+  const location = useLocation();
   const axiosInstance = useAxios();
+  const from = location?.state?.from?.pathname || "/";
 
   const {
     register,
@@ -88,7 +90,7 @@ const RegisterPage = () => {
                 console.log("Failed to save user to DB:", error);
               });
             toast.success("User created successfully!");
-            navigate("/");
+            navigate(from, { replace: true });
             reset();
             setPreview(null);
           })

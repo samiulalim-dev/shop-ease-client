@@ -1,7 +1,7 @@
 import React, { use, useState } from "react";
 import Lottie from "lottie-react";
 import loginAnimation from "../../assets/lottieFiles/login.json";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import GoogleSignin from "../../Shared/GoogleSignin/GoogleSignin";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,8 @@ const LoginPage = () => {
   const [seePassword, setSeePassword] = useState(true);
   const { signInUser } = use(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -26,10 +28,11 @@ const LoginPage = () => {
       .then((result) => {
         // console.log(result);
         toast.success("Login successfully!");
-        navigate("/");
+        navigate(from, { replace: true });
         reset();
       })
       .catch((error) => {
+        toast.error("Please provide valid email & password");
         console.log(error);
       });
   };
