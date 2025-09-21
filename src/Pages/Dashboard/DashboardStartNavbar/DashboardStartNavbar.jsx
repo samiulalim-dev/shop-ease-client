@@ -96,18 +96,11 @@ const DashboardStartNavbar = ({ setSidebarOpen }) => {
                 <div className="border-t border-gray-200 my-2"></div>
 
                 {/* Actions */}
-                <li>
-                  <Link
-                    to="/dashboard"
-                    className="w-full py-2 text-sm font-medium text-[#003F62] hover:bg-[#f5f5f5] rounded-lg"
-                  >
-                    <FaArrowLeft /> Go to Dashboard
-                  </Link>
-                </li>
+
                 <li>
                   <button
                     onClick={handleSignOut}
-                    className="w-full py-2 text-sm font-medium text-[#EDA415] hover:bg-red-50 rounded-lg"
+                    className="px-5 cursor-pointer py-2 bg-[#EDA415] hover:bg-orange-500 rounded-lg text-white font-semibold shadow-md transition"
                   >
                     Logout
                   </button>
