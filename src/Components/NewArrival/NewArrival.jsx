@@ -32,7 +32,7 @@ const NewArrival = () => {
   ];
 
   return (
-    <section className="max-w-screen-xl mx-auto px-4 pb-6 sm:py-12 overflow-hidden">
+    <section className="max-w-screen-xl mx-auto px-4 pb-6 my-8 md:my-16 overflow-hidden">
       <h2
         className="pb-8 dark:text-white text-[#003F62] text-3xl font-bold text-center"
         data-aos="fade-up"

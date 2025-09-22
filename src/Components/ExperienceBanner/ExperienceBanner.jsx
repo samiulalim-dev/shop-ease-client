@@ -29,7 +29,7 @@ export default function ExperienceBanner() {
   }, []);
 
   return (
-    <div className="max-w-screen-xl px-4  mx-auto">
+    <div className="max-w-screen-xl px-4 my-2 md:my-12 mx-auto">
       <div
         data-aos="fade-up"
         className="mt-12 p-8 mb-2 sm:mb-14 bg-linear-to-r 
@@ -56,7 +56,7 @@ export default function ExperienceBanner() {
           </h2>
 
           {/* Countdown Timer */}
-          <div className="flex justify-center md:justify-start space-x-4 mb-6">
+          <div className="flex justify-center md:justify-start space-x-4  mb-6">
             <div className="bg-white text-center text-[#003F62] shadow w-20 rounded-full p-3">
               <p className="text-xl font-bold">{timeLeft.days || "00"}</p>
               <span className="text-sm ">Days</span>
@@ -65,11 +65,11 @@ export default function ExperienceBanner() {
               <p className="text-xl font-bold">{timeLeft.hours || "00"}</p>
               <span className="text-sm ">Hours</span>
             </div>
-            <div className="bg-white text-center text-[#003F62] shadow w-20 rounded-full p-3">
+            <div className="bg-white text-center text-[#003F62] shadow w-20 rounded-full p-2">
               <p className="text-xl font-bold">{timeLeft.minutes || "00"}</p>
               <span className="text-sm ">Minutes</span>
             </div>
-            <div className="bg-white text-center text-[#003F62] shadow w-20 rounded-full p-3">
+            <div className="bg-white text-center text-[#003F62] shadow w-20 rounded-full p-2">
               <p className="text-xl font-bold">{timeLeft.seconds || "00"}</p>
               <span className="text-sm ">Seconds</span>
             </div>

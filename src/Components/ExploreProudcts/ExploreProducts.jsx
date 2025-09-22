@@ -24,7 +24,7 @@ const ExploreProducts = () => {
   const totalPages = Math.ceil(products.length / productsPerPage);
 
   return (
-    <section className="max-w-screen-xl mx-auto px-4 py-12">
+    <section className="max-w-screen-xl mx-auto px-4 my-8 md:my-16">
       <h2 className="pb-8 dark:text-white text-[#003F62] text-3xl font-bold text-center">
         Explore Our Products
       </h2>

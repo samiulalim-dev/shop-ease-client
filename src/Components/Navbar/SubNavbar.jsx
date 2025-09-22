@@ -72,7 +72,7 @@ const SubNavbar = () => {
   return (
     <div className=" py-3 bg-slate-100 shadow-md">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 sm:px-5 py-2">
-        {/* LEFT - Browse by Categories (Mobile + Desktop) */}
+        {/* Left - Browse by Categories (Mobile + Desktop) */}
         <button
           onClick={() => setOpenLeftDrawer(true)}
           className="flex items-center gap-2 font-medium text-gray-700 hover:text-[#EDA415]"
@@ -93,8 +93,7 @@ const SubNavbar = () => {
           onClick={() => setOpenRightMenu(!openRightMenu)}
           className="lg:hidden text-gray-700 hover:text-[#EDA415] text-xl"
         >
-          {" "}
-          <FaBars />{" "}
+          {openRightMenu ? <FaTimes size={20} /> : <FaBars />}
         </button>
       </div>
 
@@ -158,13 +157,12 @@ const SubNavbar = () => {
       {/* RIGHT MENU - Mobile */}
       {openRightMenu && (
         <div className="lg:hidden  border-t ">
-          {" "}
           <motion.ul
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3 }}
-            className="flex flex-col p-3 gap-2 font-medium text-gray-700"
+            className="flex flex-col  p-3 gap-2 font-medium text-gray-700"
           >
             {" "}
             {navLinks}

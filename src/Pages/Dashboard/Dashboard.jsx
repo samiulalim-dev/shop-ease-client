@@ -338,15 +338,14 @@ const DashboardLayout = () => {
         ></DashboardStartNavbar>
       </div>
 
-      <div className="flex flex-1">
+      <div className="flex">
         {/* Desktop Sidebar */}
         <aside className="hidden  lg:flex flex-col w-64  bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md">
-          <ul className=" menu mt-5 shadow-lg min-h-screen text-white">
+          <ul className=" menu mt-5 sticky top-0  z-20 shadow-lg min-h-screen  text-white">
             <DashboardUserProfile></DashboardUserProfile>
             {dashboardSideNavbar}
           </ul>
         </aside>
-
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
           <div>
@@ -359,25 +358,26 @@ const DashboardLayout = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.3 }}
-              className="relative bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md w-60 sm:w-64 h-full"
+              className=" fixed  min-h-screen z-20 top-12 bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md w-62 sm:w-64"
             >
               <button
-                className="absolute top-4 right-4 text-gray-600"
+                className="absolute  top-4 right-4 text-gray-600"
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaTimes size={20} />
+                <FaTimes size={28} />
               </button>
 
-              <ul className=" menu shadow-lg min-h-screen text-white">
-                <DashboardUserProfile></DashboardUserProfile>
+              <ul className=" menu  shadow-lg min-h-full text-white">
+                <span className="pt-6">
+                  <DashboardUserProfile></DashboardUserProfile>
+                </span>
                 {dashboardSideNavbar}
               </ul>
             </motion.aside>
           </div>
         )}
-
         {/* Main Content */}
-        <main className="flex-1 p-6 overflow-auto dark:bg-black/87 bg-gray-50">
+        <main className="flex-1 p-6 overflow-auto bg-gray-50 dark:bg-black/87">
           <Outlet />
         </main>
       </div>

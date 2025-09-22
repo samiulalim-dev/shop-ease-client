@@ -19,7 +19,7 @@ const DashboardStartNavbar = ({ setSidebarOpen }) => {
     <div className="bg-[#003F62] shadow-sm ">
       <div className="navbar justify-between px-2 sm:max-w-screen-xl mx-auto">
         {/* LEFT SIDE */}
-        <div className="flex items-center gap-1 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Mobile Sidebar Toggle */}
           <button
             className="lg:hidden text-white hover:text-[#EDA415]"

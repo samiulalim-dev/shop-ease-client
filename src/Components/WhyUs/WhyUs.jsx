@@ -34,7 +34,7 @@ const WhyUs = () => {
   ];
 
   return (
-    <section className="max-w-screen-xl mx-auto px-4   my-12">
+    <section className="max-w-screen-xl mx-auto px-4   mb-13">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 bg-blue-200 rounded-2xl  overflow-hidden">
         {items.map((item) => (
           <div

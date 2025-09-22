@@ -10,6 +10,7 @@ import BecomeSeller from "../Pages/BecomeSeller/BecomeSeller";
 import React from "react";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import DashboardLayout from "../Pages/Dashboard/DashboardLayout/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -51,5 +52,15 @@ export const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <DashboardLayout></DashboardLayout>
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
 ]);
