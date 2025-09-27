@@ -212,7 +212,13 @@ const RegisterPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 cursor-pointer bg-[#EDA415] hover:bg-orange-500 rounded-lg text-white font-semibold shadow-md transition"
+            disabled={uploading}
+            className={`w-full py-2 cursor-pointer rounded-lg text-white font-semibold shadow-md transition 
+          ${
+            uploading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[#EDA415] hover:bg-orange-500"
+          }`}
           >
             {uploading ? "Uploading..." : "Register"}
           </button>
