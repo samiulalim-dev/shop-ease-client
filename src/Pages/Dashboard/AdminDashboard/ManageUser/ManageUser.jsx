@@ -4,29 +4,27 @@ import { use, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import user_avatar from "../../../../assets/user-avatar.png";
-import useAxios from "../../../../Hooks/useAxios/useAxios";
+import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
 
 const ManageUser = () => {
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(4);
   // console.log(search);
-  const { data: users = [], isLoading } = useQuery({
-    queryKey: ["users", search],
+  const { data, isLoading } = useQuery({
+    queryKey: ["Users", search, page],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/all-user?search=${search}`);
+      const res = await axiosSecure.get(
+        `/all-user?search=${search}&page=${page}&limit=${limit}`
+      );
       return res.data;
     },
   });
 
-  // if (isLoading) {
-  //   return (
-
-  //   );
-  // }
-
   return (
     <div className="md:p-6 sm:p-3 p-1">
-      <div className="flex  mb-10 justify-between">
+      <div className="flex  mb-10 flex-col gap-4 sm:flex-row items-center sm:justify-between">
         <h2 className="text-2xl text-[#003F62] dark:text-white font-bold">
           Manage Users
         </h2>
@@ -57,13 +55,9 @@ const ManageUser = () => {
         </label>
       </div>
       {isLoading ? (
-        <div className="p-6">
+        <div className="">
           {/* Skeleton Loader for Table */}
-          <div className="flex  mb-10 justify-between">
-            <h2 className="text-2xl text-[#003F62] dark:text-white font-bold">
-              Manage Users
-            </h2>
-          </div>
+
           <div className="overflow-x-auto">
             <table className="table w-full">
               <thead className="bg-gray-200">
@@ -100,85 +94,110 @@ const ManageUser = () => {
           </div>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table dark:text-white">
-            {/* head */}
-            <thead>
-              <tr className="dark:text-white text-[#003F62]">
-                <th>NO</th>
-                <th>Name</th>
-                <th>Created Date</th>
-                <th>Role</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {users.map((user, index) => (
-                <tr key={user._id}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src={user?.photo ? user?.photo : user_avatar}
-                            alt="User Avatar"
-                          />
+        <div>
+          <div className="overflow-x-auto">
+            <table className="table dark:text-white">
+              {/* head */}
+              <thead>
+                <tr className="dark:text-white text-[#003F62]">
+                  <th>NO</th>
+                  <th>Name</th>
+                  <th>Created Date</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                {data?.allUsers?.map((user, index) => (
+                  <tr key={user._id}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img
+                              src={user?.photo ? user?.photo : user_avatar}
+                              alt="User Avatar"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{user.name}</div>
+                          <div className="text-sm opacity-50">{user.email}</div>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{user.name}</div>
-                        <div className="text-sm opacity-50">{user.email}</div>
+                    </td>
+                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td className="capitalize">
+                      {user.role === "admin" && (
+                        <span className="px-2 py-1 rounded-full bg-red-500 text-white font-semibold text-sm">
+                          Admin
+                        </span>
+                      )}
+
+                      {user.role === "vendor" && (
+                        <span className="px-2 py-1 rounded-full bg-blue-500 text-white font-semibold text-sm">
+                          Vendor
+                        </span>
+                      )}
+
+                      {user.role === "user" && (
+                        <span className="px-2 py-1 rounded-full bg-green-500 text-white font-semibold text-sm">
+                          User
+                        </span>
+                      )}
+                    </td>
+                    <th>
+                      <div className="flex flex-wrap gap-2">
+                        {user.role !== "admin" && (
+                          <button className="btn btn-xs bg-green-500 text-white hover:bg-green-600 transition">
+                            Make Admin
+                          </button>
+                        )}
+
+                        {user.role !== "vendor" && (
+                          <button className="btn btn-xs bg-blue-500 text-white hover:bg-blue-600 transition">
+                            Make Vendor
+                          </button>
+                        )}
+
+                        {user.role !== "user" && (
+                          <button className="btn btn-xs bg-yellow-400 text-white hover:bg-yellow-500 transition">
+                            Make User
+                          </button>
+                        )}
                       </div>
-                    </div>
-                  </td>
-                  <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                  <td className="capitalize">
-                    {user.role === "admin" && (
-                      <span className="px-2 py-1 rounded-full bg-red-500 text-white font-semibold text-sm">
-                        Admin
-                      </span>
-                    )}
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+              {/* foot */}
+            </table>
+          </div>
+          <div className="flex  justify-around items-center mt-4 md:mt-10 sm:mt-6">
+            <button
+              className="btn btn-sm bg-[#EDA415] text-white font-semibold shadow-md transition rounded-lg hover:bg-orange-500"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Previous
+            </button>
 
-                    {user.role === "vendor" && (
-                      <span className="px-2 py-1 rounded-full bg-blue-500 text-white font-semibold text-sm">
-                        Vendor
-                      </span>
-                    )}
+            <span>
+              Page {data?.currentPages} of {data?.totalPages}
+            </span>
 
-                    {user.role === "user" && (
-                      <span className="px-2 py-1 rounded-full bg-green-500 text-white font-semibold text-sm">
-                        User
-                      </span>
-                    )}
-                  </td>
-                  <th>
-                    <div className="flex flex-wrap gap-2">
-                      {user.role !== "admin" && (
-                        <button className="btn btn-xs bg-green-500 text-white hover:bg-green-600 transition">
-                          Make Admin
-                        </button>
-                      )}
-
-                      {user.role !== "vendor" && (
-                        <button className="btn btn-xs bg-blue-500 text-white hover:bg-blue-600 transition">
-                          Make Vendor
-                        </button>
-                      )}
-
-                      {user.role !== "user" && (
-                        <button className="btn btn-xs bg-yellow-400 text-white hover:bg-yellow-500 transition">
-                          Make User
-                        </button>
-                      )}
-                    </div>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-            {/* foot */}
-          </table>
+            <button
+              className="btn btn-sm bg-[#EDA415] text-white font-semibold shadow-md transition rounded-lg hover:bg-orange-500"
+              onClick={() =>
+                setPage((prev) => Math.min(prev + 1, data?.totalPages))
+              }
+              disabled={page === data?.totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </div>
