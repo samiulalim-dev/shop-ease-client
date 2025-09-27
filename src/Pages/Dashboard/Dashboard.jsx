@@ -248,7 +248,7 @@ const DashboardLayout = () => {
 
           <li>
             <NavLink
-              to="/manage-user"
+              to="/dashboard/manage-user"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
@@ -275,6 +275,21 @@ const DashboardLayout = () => {
             >
               <FaStore className="w-4 h-4" />
               <span className="font-medium">Manage Vendors</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/active-vendor"
+              className={({ isActive }) =>
+                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                  isActive
+                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                    : "text-white hover:text-[#EDA415]"
+                }`
+              }
+            >
+              <FaStore className="w-4 h-4" />
+              <span className="font-medium">Active Vendors</span>
             </NavLink>
           </li>
 
@@ -358,7 +373,7 @@ const DashboardLayout = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.3 }}
-              className=" fixed  min-h-screen z-20 top-12 bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md w-62 sm:w-64"
+              className=" fixed  overflow-y-auto max-h-screen z-20 top-12 bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md w-62 sm:w-64"
             >
               <button
                 className="absolute  top-4 right-4 text-gray-600"
@@ -367,7 +382,7 @@ const DashboardLayout = () => {
                 <FaTimes size={28} />
               </button>
 
-              <ul className=" menu  shadow-lg min-h-full text-white">
+              <ul className=" menu overflow-y-auto  shadow-lg min-h-full text-white">
                 <span className="pt-6">
                   <DashboardUserProfile></DashboardUserProfile>
                 </span>
@@ -377,7 +392,7 @@ const DashboardLayout = () => {
           </div>
         )}
         {/* Main Content */}
-        <main className="flex-1 p-6 overflow-auto bg-gray-50 dark:bg-black/87">
+        <main className="flex-1 md:p-6 sm:p-3 p-2 overflow-auto bg-gray-50 dark:bg-black/87">
           <Outlet />
         </main>
       </div>

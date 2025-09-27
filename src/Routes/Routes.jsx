@@ -11,6 +11,7 @@ import React from "react";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardLayout from "../Pages/Dashboard/DashboardLayout/DashboardLayout";
+import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser/ManageUser";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <DashboardLayout></DashboardLayout>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manage-user",
+        element: (
+          <PrivateRoute>
+            <ManageUser></ManageUser>
           </PrivateRoute>
         ),
       },
