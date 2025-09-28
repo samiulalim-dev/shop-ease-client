@@ -1,16 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import axios from "axios";
 import { use, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import user_avatar from "../../../../assets/user-avatar.png";
 import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   // console.log(search);
   const { data, isLoading } = useQuery({
     queryKey: ["Users", search, page],
@@ -19,6 +28,34 @@ const ManageUser = () => {
         `/all-user?search=${search}&page=${page}&limit=${limit}`
       );
       return res.data;
+    },
+  });
+
+  const { mutate: updateUserRole, isPending } = useMutation({
+    mutationFn: async ({ userId, userRole }) => {
+      const res = await axiosSecure.patch(`/user/role/${userId}`, {
+        role: userRole,
+      });
+      return res.data;
+    },
+    onSuccess: (data, variables) => {
+      if (data.modifiedCount > 0) {
+        Swal.fire({
+          icon: "success",
+          title: `Role updated to ${variables.userRole}`,
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        queryClient.invalidateQueries(["Users"]);
+        navigate("/dashboard/manage-user");
+      }
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Failed to update role",
+        text: error.message,
+      });
     },
   });
 
@@ -151,20 +188,47 @@ const ManageUser = () => {
                     <th>
                       <div className="flex flex-wrap gap-2">
                         {user.role !== "admin" && (
-                          <button className="btn btn-xs bg-green-500 text-white hover:bg-green-600 transition">
-                            Make Admin
+                          <button
+                            onClick={() =>
+                              updateUserRole({
+                                userId: user._id,
+                                userRole: "admin",
+                              })
+                            }
+                            disabled={isPending}
+                            className="btn btn-xs bg-green-500 text-white hover:bg-green-600 transition"
+                          >
+                            {isPending ? "Updating..." : "Make Admin"}
                           </button>
                         )}
 
                         {user.role !== "vendor" && (
-                          <button className="btn btn-xs bg-blue-500 text-white hover:bg-blue-600 transition">
-                            Make Vendor
+                          <button
+                            onClick={() =>
+                              updateUserRole({
+                                userId: user._id,
+                                userRole: "vendor",
+                              })
+                            }
+                            disabled={isPending}
+                            className="btn btn-xs bg-blue-500 text-white hover:bg-blue-600 transition"
+                          >
+                            {isPending ? "Updating..." : "Make Vendor"}
                           </button>
                         )}
 
                         {user.role !== "user" && (
-                          <button className="btn btn-xs bg-yellow-400 text-white hover:bg-yellow-500 transition">
-                            Make User
+                          <button
+                            onClick={() =>
+                              updateUserRole({
+                                userId: user._id,
+                                userRole: "user",
+                              })
+                            }
+                            disabled={isPending}
+                            className="btn btn-xs bg-yellow-400 text-white hover:bg-yellow-500 transition"
+                          >
+                            {isPending ? "Updating..." : "Make User"}
                           </button>
                         )}
                       </div>
@@ -185,7 +249,7 @@ const ManageUser = () => {
             </button>
 
             <span>
-              Page {data?.currentPages} of {data?.totalPages}
+              Page {data?.currentPage} of {data?.totalPages}
             </span>
 
             <button
