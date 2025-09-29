@@ -27,7 +27,7 @@ const LoginPage = () => {
     signInUser(email, password)
       .then((result) => {
         // console.log(result);
-        toast.success("Login successfully!");
+        toast.success("Login successful!");
         navigate(from, { replace: true });
         reset();
       })

@@ -6,6 +6,7 @@ import { FaArrowLeft, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Link, useNavigate } from "react-router";
 import Loading from "../../Shared/LoadingSpinner/LoadingSpinner";
+import { toast } from "react-toastify";
 
 const StartNavbar = () => {
   const { user, signOutUser, loading } = use(AuthContext);
@@ -13,7 +14,7 @@ const StartNavbar = () => {
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
-        navigate("/login");
+        toast.success("Sign-out successful");
       })
       .catch((err) => console.error(err));
   };

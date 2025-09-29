@@ -23,10 +23,13 @@ import Footer from "../../Components/Footer/Footer";
 import StartNavbar from "../../Components/Navbar/StartNavbar";
 import DashboardStartNavbar from "./DashboardStartNavbar/DashboardStartNavbar";
 import DashboardUserProfile from "./DashboardUserProfile/DashboardUserProfile";
-
+import useUserRole from "../../Hooks/useUserRole/useUserRole";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const role = "admin";
+  const { role, isRoleLoading } = useUserRole();
+  // console.log(role);
   const dashboardSideNavbar = (
     <>
       <li>
@@ -45,286 +48,400 @@ const DashboardLayout = () => {
         </NavLink>
       </li>
       {/* user role */}
-      {role === "user" && (
-        <>
+      {isRoleLoading ? (
+        <ul className="space-y-3 px-6">
           <li>
-            <NavLink
-              to="/my-orders"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaShoppingBag className="w-4 h-4" />
-              <span className="font-medium">My Orders</span>
-            </NavLink>
+            <Skeleton
+              height={40}
+              width={`80%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
           </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`70%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`60%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`90%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+        </ul>
+      ) : (
+        !isRoleLoading &&
+        role === "user" && (
+          <>
+            <li>
+              <NavLink
+                to="/my-orders"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaShoppingBag className="w-4 h-4" />
+                <span className="font-medium">My Orders</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/wishlist"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaHeart className="w-4 h-4" />
-              <span className="font-medium">My Wishlist</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/wishlist"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaHeart className="w-4 h-4" />
+                <span className="font-medium">My Wishlist</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/cart"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaShoppingCart className="w-4 h-4" />
-              <span className="font-medium">Cart</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaShoppingCart className="w-4 h-4" />
+                <span className="font-medium">Cart</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/payment-history"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaCreditCard className="w-4 h-4" />
-              <span className="font-medium">Payment History</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/payment-history"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaCreditCard className="w-4 h-4" />
+                <span className="font-medium">Payment History</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/reviews"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaStar className="w-4 h-4" />
-              <span className="font-medium">Review and Rating</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/reviews"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaStar className="w-4 h-4" />
+                <span className="font-medium">Review and Rating</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/track-order"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-gap-4 px-8 hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaTruck className="w-4 h-4" />
-              <span className="font-medium">Track Order</span>
-            </NavLink>
-          </li>
-        </>
+            <li>
+              <NavLink
+                to="/track-order"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-gap-4 px-8 hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaTruck className="w-4 h-4" />
+                <span className="font-medium">Track Order</span>
+              </NavLink>
+            </li>
+          </>
+        )
       )}
       {/* vendor role */}
-      {role === "vendor" && (
-        <>
+      {isRoleLoading ? (
+        <ul className="space-y-3 px-6">
           <li>
-            <NavLink
-              to="/sales-report"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaShoppingBag className="w-4 h-4" />
-              <span className="font-medium">Sales Report</span>
-            </NavLink>
+            <Skeleton
+              height={40}
+              width={`80%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
           </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`70%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`60%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`90%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+        </ul>
+      ) : (
+        !isRoleLoading &&
+        role === "vendor" && (
+          <>
+            <li>
+              <NavLink
+                to="/sales-report"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaShoppingBag className="w-4 h-4" />
+                <span className="font-medium">Sales Report</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/add-product"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaPlusCircle className="w-4 h-4" />
-              <span className="font-medium">Add Product</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/add-product"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaPlusCircle className="w-4 h-4" />
+                <span className="font-medium">Add Product</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/my-products"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaBoxOpen className="w-4 h-4" />
-              <span className="font-medium">My Products</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/my-products"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaBoxOpen className="w-4 h-4" />
+                <span className="font-medium">My Products</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/earnings"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaMoneyBillWave className="w-4 h-4" />
-              <span className="font-medium">Earnings</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/earnings"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaMoneyBillWave className="w-4 h-4" />
+                <span className="font-medium">Earnings</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/reviews"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaTruck className="w-4 h-4" />
-              <span className="font-medium">Delivery Status</span>
-            </NavLink>
-          </li>
-        </>
+            <li>
+              <NavLink
+                to="/reviews"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaTruck className="w-4 h-4" />
+                <span className="font-medium">Delivery Status</span>
+              </NavLink>
+            </li>
+          </>
+        )
       )}
-      {role === "admin" && (
-        <>
+      {isRoleLoading ? (
+        <ul className="space-y-3 px-6">
           <li>
-            <NavLink
-              to="/report-analytics"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaChartBar className="w-4 h-4" />
-              <span className="font-medium">Report & Analytics</span>
-            </NavLink>
+            <Skeleton
+              height={40}
+              width={`80%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
           </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`70%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`60%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+          <li>
+            <Skeleton
+              height={40}
+              width={`90%`}
+              baseColor="#2c2c54"
+              highlightColor="#40407a"
+            />
+          </li>
+        </ul>
+      ) : (
+        !isRoleLoading &&
+        role === "admin" && (
+          <>
+            <li>
+              <NavLink
+                to="/report-analytics"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaChartBar className="w-4 h-4" />
+                <span className="font-medium">Report & Analytics</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/dashboard/manage-user"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaUsers className="w-4 h-4" />
-              <span className="font-medium">Manage User</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/manage-user"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaUsers className="w-4 h-4" />
+                <span className="font-medium">Manage User</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/manage-vendor"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaStore className="w-4 h-4" />
-              <span className="font-medium">Manage Vendors</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/active-vendor"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaStore className="w-4 h-4" />
-              <span className="font-medium">Active Vendors</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/manage-vendor"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaStore className="w-4 h-4" />
+                <span className="font-medium">Manage Vendors</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/active-vendor"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaStore className="w-4 h-4" />
+                <span className="font-medium">Active Vendors</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/manage-products"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaBoxOpen className="w-4 h-4" />
-              <span className="font-medium">Manage Products</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/manage-products"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaBoxOpen className="w-4 h-4" />
+                <span className="font-medium">Manage Products</span>
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink
-              to="/manage-orders"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaClipboardList className="w-4 h-4" />
-              <span className="font-medium">Manage Orders</span>
-            </NavLink>
-          </li>
-        </>
+            <li>
+              <NavLink
+                to="/manage-orders"
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                    isActive
+                      ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                      : "text-white hover:text-[#EDA415]"
+                  }`
+                }
+              >
+                <FaClipboardList className="w-4 h-4" />
+                <span className="font-medium">Manage Orders</span>
+              </NavLink>
+            </li>
+          </>
+        )
       )}
       <li>
         <NavLink
@@ -356,7 +473,7 @@ const DashboardLayout = () => {
       <div className="flex">
         {/* Desktop Sidebar */}
         <aside className="hidden  lg:flex flex-col w-64  bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md">
-          <ul className=" menu mt-5 sticky top-0  z-20 shadow-lg min-h-screen  text-white">
+          <ul className=" menu mt-5 pb-12 sticky top-0  z-20 shadow-lg min-h-screen  text-white">
             <DashboardUserProfile></DashboardUserProfile>
             {dashboardSideNavbar}
           </ul>

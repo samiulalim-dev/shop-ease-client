@@ -12,6 +12,7 @@ import user_avatar from "../../../../assets/user-avatar.png";
 import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import useUserRole from "../../../../Hooks/useUserRole/useUserRole";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();

@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import ThemeToggle from "../../../Components/ThemeToogle/ThemeToogle";
 import Logo from "../../../Shared/Logo/Logo";
+import { toast } from "react-toastify";
 const DashboardStartNavbar = ({ setSidebarOpen }) => {
   const { user, signOutUser, loading } = use(AuthContext);
   const navigate = useNavigate();
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
-        navigate("/login");
+        toast.success("Sign out successful");
       })
       .catch((err) => console.error(err));
   };
