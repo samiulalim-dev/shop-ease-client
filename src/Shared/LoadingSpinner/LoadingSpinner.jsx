@@ -32,17 +32,12 @@ const Loading = () => {
         </div>
 
         {/* Subtitle */}
-        <p className="text-gray-400 text-sm mb-8 animate-fade-in">
+        <p className="text-gray-400 text-sm mb-8">
           Preparing your shopping experience...
         </p>
 
-        {/* Enhanced Progress Bar */}
-        <div className="w-64 h-1 bg-gray-800 rounded-full overflow-hidden shadow-inner">
-          <div className="h-full bg-gradient-to-r from-[#EDA415] to-yellow-400 animate-progress-slide shadow-lg" />
-        </div>
-
         {/* Loading Dots */}
-        <div className="flex space-x-2 mt-6">
+        <div className="flex space-x-2">
           <div
             className="w-2 h-2 bg-[#EDA415] rounded-full animate-bounce"
             style={{ animationDelay: "0ms" }}
@@ -60,20 +55,16 @@ const Loading = () => {
 
       {/* Custom Animations */}
       <style>{`
-        @keyframes progress-slide {
-          0% {
-            width: 0%;
-            opacity: 1;
-          }
-          50% {
-            width: 100%;
-            opacity: 1;
-          }
-          100% {
-            width: 100%;
-            opacity: 0.7;
-          }
-        }
+        @keyframes progress-wave {
+  0% { width: 20%; }
+  50% { width: 80%; }
+  100% { width: 20%; }
+}
+
+.animate-progress-wave {
+  animation: progress-wave 2s ease-in-out infinite;
+}
+
 
         @keyframes shimmer {
           0% {

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { use, useEffect } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useNavigate } from "react-router";
+import ForbiddenPage from "../../Pages/Forbidden/ForbiddenPage";
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
 });
@@ -33,7 +34,7 @@ const useAxiosSecure = () => {
       (response) => response,
       (error) => {
         if (error.response.status === 403) {
-          navigate("/forbidden");
+          return <ForbiddenPage></ForbiddenPage>;
         } else if (error.response.status === 401) {
           signOutUser()
             .then(() => {
