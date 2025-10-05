@@ -13,14 +13,18 @@ import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useUserRole from "../../../../Hooks/useUserRole/useUserRole";
+import { AuthContext } from "../../../../AuthProvider/AuthProvider";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
+  const [loadingUserId, setLoadingUserId] = useState(null);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { user, signOutUser } = use(AuthContext);
+  // console.log(user);
   // console.log(search);
   const { data, isLoading } = useQuery({
     queryKey: ["Users", search, page],
@@ -33,13 +37,17 @@ const ManageUser = () => {
   });
 
   const { mutate: updateUserRole, isPending } = useMutation({
-    mutationFn: async ({ userId, userRole }) => {
+    mutationFn: async ({ userId, userRole, userEmail }) => {
+      setLoadingUserId(userId);
       const res = await axiosSecure.patch(`/user/role/${userId}`, {
         role: userRole,
       });
       return res.data;
     },
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
+      setLoadingUserId(null);
+      // console.log(variables);
+      // Role successfully updated
       if (data.modifiedCount > 0) {
         Swal.fire({
           icon: "success",
@@ -47,11 +55,34 @@ const ManageUser = () => {
           timer: 1500,
           showConfirmButton: false,
         });
+
         queryClient.invalidateQueries(["Users"]);
-        navigate("/dashboard/manage-user");
+
+        // যদি logged-in user নিজের role change করে non-admin করে
+        if (
+          user.email === variables.userEmail &&
+          variables.userRole !== "admin"
+        ) {
+          Swal.fire({
+            icon: "warning",
+            title: "You changed your role!",
+            text: "You will be signed out.",
+            timer: 2500,
+            showConfirmButton: false,
+          }).then(() => {
+            signOutUser()
+              .then(() => {
+                navigate("/login");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
+        }
       }
     },
     onError: (error) => {
+      setLoadingUserId(null);
       Swal.fire({
         icon: "error",
         title: "Failed to update role",
@@ -194,16 +225,19 @@ const ManageUser = () => {
                               updateUserRole({
                                 userId: user._id,
                                 userRole: "admin",
+                                userEmail: user.email,
                               })
                             }
-                            disabled={isPending}
+                            disabled={loadingUserId === user._id}
                             className="btn btn-xs bg-green-500 text-white hover:bg-green-600 transition"
                           >
-                            {isPending ? "Updating..." : "Make Admin"}
+                            {loadingUserId === user._id
+                              ? "Updating..."
+                              : "Make Admin"}
                           </button>
                         )}
 
-                        {user.role !== "vendor" && (
+                        {/* {user.role !== "vendor" && (
                           <button
                             onClick={() =>
                               updateUserRole({
@@ -216,7 +250,7 @@ const ManageUser = () => {
                           >
                             {isPending ? "Updating..." : "Make Vendor"}
                           </button>
-                        )}
+                        )} */}
 
                         {user.role !== "user" && (
                           <button
@@ -224,12 +258,15 @@ const ManageUser = () => {
                               updateUserRole({
                                 userId: user._id,
                                 userRole: "user",
+                                userEmail: user.email,
                               })
                             }
-                            disabled={isPending}
+                            disabled={loadingUserId === user._id}
                             className="btn btn-xs bg-yellow-400 text-white hover:bg-yellow-500 transition"
                           >
-                            {isPending ? "Updating..." : "Make User"}
+                            {loadingUserId === user._id
+                              ? "Updating..."
+                              : "Make User"}
                           </button>
                         )}
                       </div>
