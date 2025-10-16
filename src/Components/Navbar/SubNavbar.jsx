@@ -1,69 +1,84 @@
 import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaBoxOpen,
+  FaInfoCircle,
+  FaUserCircle,
+  FaStore,
+} from "react-icons/fa";
 import Logo from "../../Shared/Logo/Logo";
 import { motion, AnimatePresence } from "framer-motion";
 import Search from "../../Shared/Search/Search";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import useUserRole from "../../Hooks/useUserRole/useUserRole";
 const SubNavbar = () => {
   const [openRightMenu, setOpenRightMenu] = useState(false);
   const [openLeftDrawer, setOpenLeftDrawer] = useState(false);
   const { user } = use(AuthContext);
+  const { role } = useUserRole();
   const navLinks = (
     <>
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `hover:text-[#EDA415] ${
+          `flex items-center gap-2 hover:text-[#EDA415] ${
             isActive ? "text-[#EDA415]" : "text-gray-700"
           }`
         }
       >
-        Home
+        <FaHome className="text-lg" /> Home
       </NavLink>
+
       <NavLink
         to="/products"
         className={({ isActive }) =>
-          `hover:text-[#EDA415] ${
+          `flex items-center gap-2 hover:text-[#EDA415] ${
             isActive ? "text-[#EDA415]" : "text-gray-700"
           }`
         }
       >
-        Products
+        <FaBoxOpen className="text-lg" /> Products
       </NavLink>
 
       <NavLink
         to="/aboutUs"
         className={({ isActive }) =>
-          `hover:text-[#EDA415] ${
+          `flex items-center gap-2 hover:text-[#EDA415] ${
             isActive ? "text-[#EDA415]" : "text-gray-700"
           }`
         }
       >
-        About Us
+        <FaInfoCircle className="text-lg" /> About Us
       </NavLink>
+
       {user && (
         <NavLink
           to="/dashboard"
           className={({ isActive }) =>
-            `hover:text-[#EDA415] ${
+            `flex items-center gap-2 hover:text-[#EDA415] ${
               isActive ? "text-[#EDA415]" : "text-gray-700"
             }`
           }
         >
-          Dashboard
+          <FaUserCircle className="text-lg" />{" "}
+          {role === "user" ? "Account" : "Dashboard"}
         </NavLink>
       )}
+
       {!user && (
         <NavLink
           to="/becomeSeller"
           className={({ isActive }) =>
-            `hover:text-[#EDA415] ${
+            `flex items-center gap-2 hover:text-[#EDA415] ${
               isActive ? "text-[#EDA415]" : "text-gray-700"
             }`
           }
         >
-          Become a Seller
+          <FaStore className="text-lg" /> Become a Seller
         </NavLink>
       )}
     </>
