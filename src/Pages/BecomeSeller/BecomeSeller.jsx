@@ -6,11 +6,13 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useNavigate } from "react-router";
+import useAxios from "../../Hooks/useAxios/useAxios";
 
 const BecomeSellerPage = () => {
   const [uploading, setUploading] = useState(false);
   const [seePassword, setSeePassword] = useState(true);
   const [photo, setPhoto] = useState("");
+  const axiosInstance = useAxios();
   const { createUser, setUser, updateUser } = use(AuthContext);
   const navigate = useNavigate();
   const {
@@ -72,6 +74,43 @@ const BecomeSellerPage = () => {
               displayName: name,
               photoURL: photo,
             });
+
+            const userInfo = {
+              name,
+              email,
+              role: "seller",
+              photo,
+              createdAt: new Date(),
+            };
+            const sellerInfo = {
+              fullName: name,
+              email: email,
+              shopName: sellerData.shopName,
+              phone: sellerData.phone,
+              photoLogo: sellerData.photo,
+              address: sellerData.address,
+              role: "seller",
+              status: "pending",
+              createdAt: new Date(),
+            };
+            // save data in userCollection
+            axiosInstance
+              .post("/user", userInfo)
+              .then((res) => {
+                console.log(res.data);
+              })
+              .catch((error) => {
+                console.log("data failed to save mongoDB", error);
+              });
+            // save data in sellerCollection
+            axiosInstance
+              .post("/sellers", sellerInfo)
+              .then((res) => {
+                console.log(res.data);
+              })
+              .catch((error) => {
+                console.log("failed to save sellers in database", error);
+              });
 
             toast.success("Seller account created successfully!");
             navigate("/");

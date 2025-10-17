@@ -205,9 +205,9 @@ const ManageUser = () => {
                         </span>
                       )}
 
-                      {user.role === "vendor" && (
+                      {user.role === "seller" && (
                         <span className="px-2 py-1 rounded-full bg-blue-500 text-white font-semibold text-sm">
-                          Vendor
+                          Seller
                         </span>
                       )}
 
@@ -237,12 +237,12 @@ const ManageUser = () => {
                           </button>
                         )}
 
-                        {/* {user.role !== "vendor" && (
+                        {/* {user.role !== "seller" && (
                           <button
                             onClick={() =>
                               updateUserRole({
                                 userId: user._id,
-                                userRole: "vendor",
+                                userRole: "seller",
                               })
                             }
                             disabled={isPending}

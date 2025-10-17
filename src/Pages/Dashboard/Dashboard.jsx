@@ -149,8 +149,8 @@ const DashboardLayout = () => {
           </li>
         </>
       )}
-      {/* vendor role */}
-      {!isRoleLoading && role === "vendor" && (
+      {/* seller role */}
+      {!isRoleLoading && role === "seller" && (
         <>
           <li>
             <NavLink
@@ -270,7 +270,7 @@ const DashboardLayout = () => {
 
           <li>
             <NavLink
-              to="/manage-vendor"
+              to="/manage-sellers"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
@@ -280,12 +280,12 @@ const DashboardLayout = () => {
               }
             >
               <FaStore className="w-4 h-4" />
-              <span className="font-medium">Manage Vendors</span>
+              <span className="font-medium">Manage Sellers</span>
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/active-vendor"
+              to="/active-Sellers"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
