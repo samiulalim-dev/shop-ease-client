@@ -1,14 +1,18 @@
 import { useForm } from "react-hook-form";
 import Lottie from "lottie-react";
 import marketPlace from "../../assets/lottieFiles/marketplace.json";
-import { useState } from "react";
+import { use, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useNavigate } from "react-router";
 
 const BecomeSellerPage = () => {
   const [uploading, setUploading] = useState(false);
   const [seePassword, setSeePassword] = useState(true);
   const [photo, setPhoto] = useState("");
+  const { createUser, setUser, updateUser } = use(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -41,33 +45,42 @@ const BecomeSellerPage = () => {
       if (imgData.success) {
         const photoUrl = imgData.data.url;
         sellerData.photo = photoUrl;
-        console.log(sellerData);
+        // console.log(
+        //   sellerData.email,
+        //   sellerData.fullName,
+        //   sellerData.password,
+        //   sellerData.photo
+        // );
+        const name = sellerData.fullName;
+        const email = sellerData.email;
+        const password = sellerData.password;
+        const photo = sellerData.photo;
         // create user
-        // createUser(email, password)
-        //   .then((result) => {
-        //     updateUser(name, photoUrl)
-        //       .then(() => {
-        //         console.log("User updated with name & photo");
-        //       })
-        //       .catch((error) => {
-        //         console.error("Update failed:", error.message);
-        //       });
+        createUser(email, password)
+          .then((result) => {
+            updateUser(name, photo)
+              .then(() => {
+                console.log("User updated with name & photo");
+              })
+              .catch((error) => {
+                console.error("Update failed:", error.message);
+              });
 
-        //     //  setUser
-        //     setUser({
-        //       ...result.user,
-        //       displayName: name,
-        //       photoURL: photoUrl,
-        //     });
+            //  setUser
+            setUser({
+              ...result.user,
+              displayName: name,
+              photoURL: photo,
+            });
 
-        //     toast.success("Seller created successfully!");
-        //     navigate("/");
-        //     reset();
-        //   })
-        //   .catch((error) => {
-        //     toast.error(error.message);
-        //     console.log(error.message);
-        //   });
+            toast.success("Seller account created successfully!");
+            navigate("/");
+            reset();
+          })
+          .catch((error) => {
+            toast.error(error.message);
+            console.log(error.message);
+          });
       }
     } catch (error) {
       setUploading(false);
@@ -80,9 +93,9 @@ const BecomeSellerPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row py-12 items-center justify-center bg-gray-50 px-4 dark:bg-black/87 sm:px-8 lg:px-16">
+    <div className="min-h-screen flex flex-col-reverse lg:flex-row py-12 items-center justify-center bg-gray-50 px-4 dark:bg-black/87 sm:px-8 lg:px-16">
       {/* LEFT - Form */}
-      <div className="w-full md:w-1/2 bg-white dark:bg-black/100 shadow-lg rounded-2xl p-6 sm:p-10">
+      <div className="w-full lg:w-1/2 mx-auto bg-white dark:bg-black/87 shadow-lg rounded-2xl p-6 sm:p-10">
         <h2 className="text-2xl dark:text-white sm:text-3xl font-bold text-[#003F62] mb-6">
           Become a Seller
         </h2>
@@ -236,14 +249,19 @@ const BecomeSellerPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 cursor-pointer bg-[#EDA415] hover:bg-orange-500 rounded-lg text-white font-semibold shadow-md transition"
+            disabled={uploading}
+            className={`w-full py-2 cursor-pointer ${
+              uploading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#EDA415] hover:bg-orange-500"
+            } rounded-lg text-white font-semibold shadow-md transition`}
           >
             {uploading ? "Uploading..." : "Register as a seller"}
           </button>
         </form>
       </div>
       {/* Right - Animation */}
-      <div className="hidden md:flex w-full md:w-1/2 justify-center items-center p-6">
+      <div className="md:flex w-full lg:w-1/2 justify-center items-center  md:p-6">
         <Lottie animationData={marketPlace}></Lottie>
       </div>
     </div>

@@ -57,7 +57,7 @@ const CategorySlider = () => {
         spaceBetween={20}
         breakpoints={{
           640: { slidesPerView: 2 }, // sm
-          768: { slidesPerView: 3 }, // md
+          768: { slidesPerView: 2 }, // md
           1024: { slidesPerView: 3 }, // lg
         }}
         className="mySwiper"

@@ -14,6 +14,9 @@ import DashboardLayout from "../Pages/Dashboard/DashboardLayout/DashboardLayout"
 import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser/ManageUser";
 import AdminPrivateRoute from "../PrivateRoute/AdminPrivateRoute/AdminPrivateRoute";
 import ForbiddenPage from "../Pages/Forbidden/ForbiddenPage";
+import Search from "../Shared/Search/Search";
+import MobileSearchBar from "../Shared/MobileSearchBar/MobileSearchBar";
+import SearchCheckingRoute from "../PrivateRoute/SearchCheckingRoute/SearchCheckingRoute";
 
 export const router = createBrowserRouter([
   {
@@ -77,5 +80,13 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/search",
+    element: (
+      <SearchCheckingRoute>
+        <MobileSearchBar></MobileSearchBar>
+      </SearchCheckingRoute>
+    ),
   },
 ]);
