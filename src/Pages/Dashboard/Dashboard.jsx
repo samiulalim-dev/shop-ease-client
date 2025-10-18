@@ -27,6 +27,7 @@ import useUserRole from "../../Hooks/useUserRole/useUserRole";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SidebarSkeleton from "./SidebarSkeleton/SidebarSkeleton";
+import SubNavbar from "../../Components/Navbar/SubNavbar";
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { role, isRoleLoading } = useUserRole();
@@ -45,7 +46,7 @@ const DashboardLayout = () => {
           }
         >
           <FaHome className="w-4 h-4" />
-          <span className="font-medium">Home</span>
+          <span className="font-medium">Back to Home</span>
         </NavLink>
       </li>
       {isRoleLoading && <SidebarSkeleton></SidebarSkeleton>}
@@ -113,22 +114,6 @@ const DashboardLayout = () => {
             >
               <FaCreditCard className="w-4 h-4" />
               <span className="font-medium">Payment History</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to="/reviews"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaStar className="w-4 h-4" />
-              <span className="font-medium">Review and Rating</span>
             </NavLink>
           </li>
 
@@ -229,6 +214,21 @@ const DashboardLayout = () => {
             >
               <FaTruck className="w-4 h-4" />
               <span className="font-medium">Delivery Status</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/reviews"
+              className={({ isActive }) =>
+                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
+                  isActive
+                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
+                    : "text-white hover:text-[#EDA415]"
+                }`
+              }
+            >
+              <FaStar className="w-4 h-4" />
+              <span className="font-medium">Review & Rating</span>
             </NavLink>
           </li>
         </>
@@ -357,50 +357,50 @@ const DashboardLayout = () => {
         <DashboardStartNavbar
           setSidebarOpen={setSidebarOpen}
         ></DashboardStartNavbar>
+        <div>
+          <SubNavbar></SubNavbar>
+        </div>
       </div>
 
-      <div className="flex">
-        {/* Desktop Sidebar */}
-        <aside className="hidden  lg:flex flex-col w-64  bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md">
-          <ul className=" menu mt-5 pb-12 sticky top-0  z-20 shadow-lg min-h-screen  text-white">
-            <DashboardUserProfile></DashboardUserProfile>
-            {dashboardSideNavbar}
-          </ul>
-        </aside>
-        {/* Mobile Sidebar Overlay */}
-        {sidebarOpen && (
-          <div>
-            <div
-              className="fixed inset-0 bg-black/20 bg-opacity-40"
-              onClick={() => setSidebarOpen(false)}
-            />
-            <motion.aside
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.3 }}
-              className=" fixed  overflow-y-auto max-h-screen z-20 top-12 bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md w-62 sm:w-64"
-            >
-              <button
-                className="absolute  top-4 right-4 text-gray-600"
+      <div className="bg-gray-200">
+        <div className="flex  max-w-screen-xl mx-auto">
+          {/* Desktop Sidebar */}
+          <aside className="hidden my-7 rounded-2xl lg:flex flex-col w-64  bg-gradient-to-b from-[#04073d] to-[#003F62]  shadow-md sticky top-10 h-[calc(100vh-3.5rem)]">
+            <ul className=" p-2 font-normal text-sm mt-5  overflow-y-auto h-full text-white">
+              <DashboardUserProfile></DashboardUserProfile>
+              {dashboardSideNavbar}
+            </ul>
+          </aside>
+          {/* Sidebar Mobile */}
+          {sidebarOpen && (
+            <>
+              <div
+                className="fixed inset-0 bg-black/40 z-20 lg:hidden"
                 onClick={() => setSidebarOpen(false)}
+              />
+              <motion.aside
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ duration: 0.3 }}
+                className="fixed top-0 left-0 z-50 w-64 h-full bg-gradient-to-b from-[#04073d] to-[#003F62] text-white  lg:hidden overflow-y-auto p-4"
               >
-                <FaTimes size={28} />
-              </button>
+                <div className="flex justify-end items-center mb-2">
+                  <button onClick={() => setSidebarOpen(false)}>
+                    <FaTimes size={22} />
+                  </button>
+                </div>
+                <DashboardUserProfile />
+                <ul className="space-y-1 mt-4">{dashboardSideNavbar}</ul>
+              </motion.aside>
+            </>
+          )}
 
-              <ul className=" menu overflow-y-auto  shadow-lg min-h-full text-white">
-                <span className="pt-6">
-                  <DashboardUserProfile></DashboardUserProfile>
-                </span>
-                {dashboardSideNavbar}
-              </ul>
-            </motion.aside>
-          </div>
-        )}
-        {/* Main Content */}
-        <main className="flex-1 md:p-6 sm:p-3 p-2 overflow-auto bg-gray-50 dark:bg-black/87">
-          <Outlet />
-        </main>
+          {/* Main Content */}
+          <main className="flex-1 lg:my-7 lg:ml-5 lg:m-0 m-3 sm:m-4  md:p-6 rounded-2xl sm:p-3 p-2 overflow-y-auto h-[calc(100vh-3.5rem)] bg-gray-50 dark:bg-black/87">
+            <Outlet />
+          </main>
+        </div>
       </div>
 
       {/* Footer */}

@@ -19,7 +19,7 @@ const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(5);
   const [loadingUserId, setLoadingUserId] = useState(null);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
