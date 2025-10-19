@@ -170,17 +170,22 @@ const SubNavbar = () => {
               </li>
               <li>
                 <Link className="block px-2 py-2 hover:bg-gray-100 rounded-md">
-                  Clothing
+                  Fashion
                 </Link>
               </li>
               <li>
                 <Link className="block px-2 py-2 hover:bg-gray-100 rounded-md">
-                  Shoes
+                  Footwear
                 </Link>
               </li>
               <li>
                 <Link className="block px-2 py-2 hover:bg-gray-100 rounded-md">
-                  Accessories
+                  Groceries
+                </Link>
+              </li>
+              <li>
+                <Link className="block px-2 py-2 hover:bg-gray-100 rounded-md">
+                  Home Appliances
                 </Link>
               </li>
             </ul>

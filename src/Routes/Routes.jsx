@@ -19,6 +19,8 @@ import MobileSearchBar from "../Shared/MobileSearchBar/MobileSearchBar";
 import SearchCheckingRoute from "../PrivateRoute/SearchCheckingRoute/SearchCheckingRoute";
 import MyOrders from "../Pages/Dashboard/UserDashboard/MyOrders/MyOrders";
 import UserPrivateRoute from "../PrivateRoute/UserPrivateRoute/UserPrivateRoute";
+import SellerPrivateRoute from "../PrivateRoute/SellerPrivateRoute/SellerPrivateRoute";
+import AddProduct from "../Pages/Dashboard/SellerDashboard/AddProducts/AddProduct";
 
 export const router = createBrowserRouter([
   {
@@ -79,6 +81,14 @@ export const router = createBrowserRouter([
           <AdminPrivateRoute>
             <ManageUser></ManageUser>
           </AdminPrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-product",
+        element: (
+          <SellerPrivateRoute>
+            <AddProduct></AddProduct>
+          </SellerPrivateRoute>
         ),
       },
     ],

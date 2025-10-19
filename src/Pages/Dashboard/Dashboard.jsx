@@ -155,7 +155,7 @@ const DashboardLayout = () => {
 
           <li>
             <NavLink
-              to="/add-product"
+              to="/dashboard/add-product"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
@@ -397,7 +397,7 @@ const DashboardLayout = () => {
           )}
 
           {/* Main Content */}
-          <main className="flex-1 lg:my-7 lg:ml-5 lg:m-0 m-3 sm:m-4  md:p-6 rounded-2xl sm:p-3 p-2 overflow-y-auto h-[calc(100vh-3.5rem)] bg-gray-50 dark:bg-black/87">
+          <main className="flex-1 lg:my-7 lg:ml-6 lg:m-0 m-2 sm:m-3  md:p-6 rounded-2xl sm:p-3 p-2 overflow-y-auto h-[calc(100vh-3.5rem)] lg:bg-gray-50 dark:bg-black/87">
             <Outlet />
           </main>
         </div>
