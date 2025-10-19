@@ -17,12 +17,13 @@ import Search from "../../Shared/Search/Search";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import useUserRole from "../../Hooks/useUserRole/useUserRole";
 import { CiSearch } from "react-icons/ci";
+import Skeleton from "react-loading-skeleton";
 
 const SubNavbar = () => {
   const [openRightMenu, setOpenRightMenu] = useState(false);
   const [openLeftDrawer, setOpenLeftDrawer] = useState(false);
   const { user } = use(AuthContext);
-  const { role } = useUserRole();
+  const { role, isRoleLoading } = useUserRole();
 
   const navLinks = (
     <>
@@ -82,7 +83,13 @@ const SubNavbar = () => {
           }
         >
           <FaUserCircle className="text-lg" />{" "}
-          {role === "user" ? "Account" : "Dashboard"}
+          {isRoleLoading ? (
+            <Skeleton width={70} height={18} borderRadius={8} />
+          ) : role === "user" ? (
+            "Account"
+          ) : (
+            "Dashboard"
+          )}
         </NavLink>
       )}
 

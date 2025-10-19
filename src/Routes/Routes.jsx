@@ -17,6 +17,8 @@ import ForbiddenPage from "../Pages/Forbidden/ForbiddenPage";
 import Search from "../Shared/Search/Search";
 import MobileSearchBar from "../Shared/MobileSearchBar/MobileSearchBar";
 import SearchCheckingRoute from "../PrivateRoute/SearchCheckingRoute/SearchCheckingRoute";
+import MyOrders from "../Pages/Dashboard/UserDashboard/MyOrders/MyOrders";
+import UserPrivateRoute from "../PrivateRoute/UserPrivateRoute/UserPrivateRoute";
 
 export const router = createBrowserRouter([
   {
