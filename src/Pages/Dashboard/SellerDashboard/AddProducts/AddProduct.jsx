@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdAddShoppingCart } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
@@ -8,6 +8,8 @@ import axios from "axios";
 import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
 import Swal from "sweetalert2";
 import { NumericFormat } from "react-number-format";
+import { AuthContext } from "../../../../AuthProvider/AuthProvider";
+import AddProductSkeleton from "../SellerSkeleton/AddProductSkeleton/AddProductSkeleton";
 
 const AddProduct = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
@@ -16,6 +18,7 @@ const AddProduct = () => {
   const [specs, setSpecs] = useState([{ key: "", value: "" }]);
   const [price, setPrice] = useState("");
   const axiosSecure = useAxiosSecure();
+
   const addSpecField = () => {
     setSpecs([...specs, { key: "", value: "" }]);
   };
