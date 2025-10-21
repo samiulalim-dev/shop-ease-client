@@ -4,6 +4,7 @@ import MyOrders from "../UserDashboard/MyOrders/MyOrders";
 import ReportAndAnalytics from "../AdminDashboard/ManageUser/ReportAndAlnalytics/ReportAndAnalytics";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import SalesReport from "../SellerDashboard/SalesReport/SalesReport";
+import { Navigate } from "react-router";
 
 const DashboardLayout = () => {
   const { isRoleLoading, role } = useUserRole();
@@ -47,7 +48,7 @@ const DashboardLayout = () => {
     return <MyOrders></MyOrders>;
   }
   if (role === "seller") {
-    return <SalesReport></SalesReport>;
+    return <Navigate to={"/dashboard/sales-report"}></Navigate>;
   }
   if (role === "admin") {
     return <ReportAndAnalytics></ReportAndAnalytics>;

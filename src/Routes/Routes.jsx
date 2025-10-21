@@ -21,6 +21,7 @@ import MyOrders from "../Pages/Dashboard/UserDashboard/MyOrders/MyOrders";
 import UserPrivateRoute from "../PrivateRoute/UserPrivateRoute/UserPrivateRoute";
 import SellerPrivateRoute from "../PrivateRoute/SellerPrivateRoute/SellerPrivateRoute";
 import AddProduct from "../Pages/Dashboard/SellerDashboard/AddProducts/AddProduct";
+import SalesReport from "../Pages/Dashboard/SellerDashboard/SalesReport/SalesReport";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,14 @@ export const router = createBrowserRouter([
           <AdminPrivateRoute>
             <ManageUser></ManageUser>
           </AdminPrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/sales-report",
+        element: (
+          <SellerPrivateRoute>
+            <SalesReport></SalesReport>
+          </SellerPrivateRoute>
         ),
       },
       {

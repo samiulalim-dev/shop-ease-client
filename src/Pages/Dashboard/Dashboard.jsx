@@ -139,7 +139,7 @@ const DashboardLayout = () => {
         <>
           <li>
             <NavLink
-              to="/sales-report"
+              to="/dashboard/sales-report"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
