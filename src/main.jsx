@@ -9,6 +9,7 @@ import Aos from "aos";
 import AuthProvider from "./AuthProvider/AuthProvider.jsx";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 Aos.init({
   duration: 1000,
   once: false,
