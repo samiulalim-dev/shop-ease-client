@@ -1,7 +1,7 @@
 import React from "react";
 
-const ReportAndAnalytics = () => {
+const ReportAndAnalysis = () => {
   return <div>this is admin report and analytics</div>;
 };
 
-export default ReportAndAnalytics;
+export default ReportAndAnalysis;

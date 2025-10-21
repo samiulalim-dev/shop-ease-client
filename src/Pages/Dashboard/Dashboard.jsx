@@ -171,7 +171,7 @@ const DashboardLayout = () => {
 
           <li>
             <NavLink
-              to="/my-products"
+              to="/dashboard/my-products"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
@@ -238,7 +238,7 @@ const DashboardLayout = () => {
         <>
           <li>
             <NavLink
-              to="/report-analytics"
+              to="/dashboard/report-analytics"
               className={({ isActive }) =>
                 `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
                   isActive
@@ -281,21 +281,6 @@ const DashboardLayout = () => {
             >
               <FaStore className="w-4 h-4" />
               <span className="font-medium">Manage Sellers</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/active-Sellers"
-              className={({ isActive }) =>
-                `flex items-center gap-4 px-8 py-3 rounded-lg transition-all duration-200 hover:bg-[#EDA415]/10 ${
-                  isActive
-                    ? "bg-[#EDA415] text-white shadow-lg transform scale-105"
-                    : "text-white hover:text-[#EDA415]"
-                }`
-              }
-            >
-              <FaStore className="w-4 h-4" />
-              <span className="font-medium">Active Vendors</span>
             </NavLink>
           </li>
 

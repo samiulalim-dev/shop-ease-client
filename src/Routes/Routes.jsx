@@ -22,6 +22,8 @@ import UserPrivateRoute from "../PrivateRoute/UserPrivateRoute/UserPrivateRoute"
 import SellerPrivateRoute from "../PrivateRoute/SellerPrivateRoute/SellerPrivateRoute";
 import AddProduct from "../Pages/Dashboard/SellerDashboard/AddProducts/AddProduct";
 import SalesReport from "../Pages/Dashboard/SellerDashboard/SalesReport/SalesReport";
+import MyProducts from "../Pages/Dashboard/SellerDashboard/MyProducts/MyProducts";
+import ReportAndAnalysis from "../Pages/Dashboard/AdminDashboard/ReportAndAnalysis/ReportAndAnalysis";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +78,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      // admin all routes here --
       {
         path: "/dashboard/manage-user",
         element: (
@@ -84,6 +87,15 @@ export const router = createBrowserRouter([
           </AdminPrivateRoute>
         ),
       },
+      {
+        path: "/dashboard/report-analytics",
+        element: (
+          <AdminPrivateRoute>
+            <ReportAndAnalysis></ReportAndAnalysis>
+          </AdminPrivateRoute>
+        ),
+      },
+      //sellers all routes here --
       {
         path: "/dashboard/sales-report",
         element: (
@@ -97,6 +109,14 @@ export const router = createBrowserRouter([
         element: (
           <SellerPrivateRoute>
             <AddProduct></AddProduct>
+          </SellerPrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/my-products",
+        element: (
+          <SellerPrivateRoute>
+            <MyProducts></MyProducts>
           </SellerPrivateRoute>
         ),
       },
