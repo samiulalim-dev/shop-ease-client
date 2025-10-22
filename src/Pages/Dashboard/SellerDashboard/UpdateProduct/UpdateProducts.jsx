@@ -3,22 +3,28 @@ import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { HiExclamationCircle } from "react-icons/hi2";
 import { MdEditDocument } from "react-icons/md";
-import { useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
+import axios from "axios";
 import useAxios from "../../../../Hooks/useAxios/useAxios";
+import Swal from "sweetalert2";
 
 const UpdateProducts = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
   const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
   const axiosInstance = useAxios();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [price, setPrice] = useState("");
   const [specs, setSpecs] = useState([{ key: "", value: "" }]);
   const [previewImages, setPreviewImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  //  Fetch product data
+  // ✅ React Query with cache & staleTime to prevent refetch
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
@@ -27,7 +33,7 @@ const UpdateProducts = () => {
     },
   });
 
-  // Initialize form and states when product loads
+  // ✅ Populate form once when product first loads
   useEffect(() => {
     if (product) {
       reset({
@@ -47,15 +53,20 @@ const UpdateProducts = () => {
           ? product.specification
           : [{ key: "", value: "" }]
       );
+      setPreviewImages(product.images || []);
     }
-  }, [product, reset]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
 
+  // ✅ Image handle
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
     setPreviewImages(files.map((file) => URL.createObjectURL(file)));
     setValue("images", files);
   };
 
+  // ✅ Specs handlers
   const addSpecField = () => setSpecs([...specs, { key: "", value: "" }]);
   const removeSpecField = (index) =>
     setSpecs(specs.filter((_, i) => i !== index));
@@ -66,21 +77,77 @@ const UpdateProducts = () => {
     setSpecs(updatedSpecs);
   };
 
+  // ✅ Submit handler
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const updatedData = { ...data, price, specification: specs };
-      console.log(updatedData);
-      //   await axiosInstance.put(`/products/${id}`, updatedData);
-      //   toast.success("Product updated successfully!");
+      let uploadedUrls = [];
+
+      // যদি নতুন ছবি upload করা হয়, তাহলে cloudinary তে পাঠানো হবে
+      if (data.images && data.images.length > 0) {
+        const uploadPromises = Array.from(data.images).map(async (file) => {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "product_images");
+          formData.append("cloud_name", "dwlpdzpui");
+
+          const res = await axios.post(
+            "https://api.cloudinary.com/v1_1/dwlpdzpui/image/upload",
+            formData
+          );
+          return res.data.secure_url;
+        });
+
+        uploadedUrls = await Promise.all(uploadPromises);
+      } else {
+        // পুরনো image গুলোই থাকবে
+        uploadedUrls = product?.images || [];
+      }
+
+      const updatedData = {
+        ...data,
+        price,
+        specification: specs,
+        images: uploadedUrls,
+      };
+
+      try {
+        const res = await axiosSecure.patch(
+          `/updateProduct/${id}`,
+          updatedData
+        );
+        console.log(res);
+        queryClient.invalidateQueries(["product", id]);
+
+        Swal.fire({
+          title: "Product Updated!",
+          text: "Your product has been successfully updated.",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#EDA415",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/dashboard/my-products");
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          title: "Update Failed!",
+          text: "Something went wrong while updating the product.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+          confirmButtonColor: "#d33",
+        });
+      }
     } catch (error) {
-      //   console.error(error);
-      //   toast.error("Failed to update product");
+      console.error(error);
     } finally {
-      //   setLoading(false);
+      setLoading(false);
     }
   };
 
+  // ✅ Loading skeleton
   if (isLoading) {
     return (
       <div className="text-center py-10">
@@ -129,7 +196,7 @@ const UpdateProducts = () => {
             Product Images
             <div
               className="tooltip tooltip-right"
-              data-tip="Hold CTRL (Windows) or CMD (Mac) and click to select multiple images"
+              data-tip="Hold CTRL (Windows) or CMD (Mac) to select multiple images"
             >
               <HiExclamationCircle size={20} className="text-[#EDA415]" />
             </div>
@@ -144,10 +211,7 @@ const UpdateProducts = () => {
           />
 
           <div className="mt-3 grid grid-cols-3 sm:grid-cols-5 gap-3">
-            {(previewImages.length > 0
-              ? previewImages
-              : product?.images || []
-            ).map((img, index) => (
+            {previewImages.map((img, index) => (
               <img
                 key={index}
                 src={img}

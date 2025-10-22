@@ -39,6 +39,7 @@ const AddProduct = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     const files = data.images;
+    // console.log(files);
     const uploadedUrls = [];
     try {
       for (const file of files) {
@@ -75,7 +76,7 @@ const AddProduct = () => {
     );
     try {
       const res = await axiosSecure.post("/productDetails", cleanData);
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.data.insertedId) {
         Swal.fire({
           position: "center",
