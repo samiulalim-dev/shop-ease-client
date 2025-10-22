@@ -24,6 +24,7 @@ import AddProduct from "../Pages/Dashboard/SellerDashboard/AddProducts/AddProduc
 import SalesReport from "../Pages/Dashboard/SellerDashboard/SalesReport/SalesReport";
 import MyProducts from "../Pages/Dashboard/SellerDashboard/MyProducts/MyProducts";
 import ReportAndAnalysis from "../Pages/Dashboard/AdminDashboard/ReportAndAnalysis/ReportAndAnalysis";
+import UpdateProducts from "../Pages/Dashboard/SellerDashboard/UpdateProduct/UpdateProducts";
 
 export const router = createBrowserRouter([
   {
@@ -117,6 +118,14 @@ export const router = createBrowserRouter([
         element: (
           <SellerPrivateRoute>
             <MyProducts></MyProducts>
+          </SellerPrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/updateProducts/:id",
+        element: (
+          <SellerPrivateRoute>
+            <UpdateProducts></UpdateProducts>
           </SellerPrivateRoute>
         ),
       },

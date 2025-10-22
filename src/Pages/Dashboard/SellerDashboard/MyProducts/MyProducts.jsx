@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { Link } from "react-router";
 const MyProducts = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = use(AuthContext);
@@ -110,44 +111,48 @@ const MyProducts = () => {
                     </span>
                   </td>
                   <td>
-                    <button className=" cursor-pointer items-center flex gap-2 sm:gap-3 ">
-                      <span
-                        data-tooltip-id="edit-tooltip"
-                        data-tooltip-content="Edit Products"
-                        className="text-2xl tooltip text-green-600"
-                      >
-                        <FaEdit></FaEdit>
-                        <Tooltip
-                          style={{
-                            backgroundColor: "#003F62",
-                            color: "#fff",
-                            fontWeight: "200",
-                            fontSize: "16px",
-                            borderRadius: "8px",
-                            padding: "2px 5px",
-                          }}
-                          id="edit-tooltip"
-                        />
-                      </span>
-                      <span
-                        data-tooltip-id="delete-tooltip"
-                        data-tooltip-content="Delete Products"
-                        className="text-red-500 text-3xl"
-                      >
-                        <MdDelete></MdDelete>
-                        <Tooltip
-                          style={{
-                            backgroundColor: "#003F62",
-                            color: "#fff",
-                            fontWeight: "200",
-                            fontSize: "16px",
-                            borderRadius: "8px",
-                            padding: "2px 5px",
-                          }}
-                          id="delete-tooltip"
-                        />
-                      </span>
-                    </button>
+                    <div className=" cursor-pointer items-center flex gap-2 sm:gap-3 ">
+                      <Link to={`/dashboard/updateProducts/${item._id}`}>
+                        <span
+                          data-tooltip-id="edit-tooltip"
+                          data-tooltip-content="Update Products"
+                          className="text-2xl tooltip text-green-600"
+                        >
+                          <FaEdit></FaEdit>
+                          <Tooltip
+                            style={{
+                              backgroundColor: "#003F62",
+                              color: "#fff",
+                              fontWeight: "200",
+                              fontSize: "13px",
+                              borderRadius: "8px",
+                              padding: "3px 4px",
+                            }}
+                            id="edit-tooltip"
+                          />
+                        </span>
+                      </Link>
+                      <button>
+                        <span
+                          data-tooltip-id="delete-tooltip"
+                          data-tooltip-content="Delete Products"
+                          className="text-red-500 text-3xl"
+                        >
+                          <MdDelete></MdDelete>
+                          <Tooltip
+                            style={{
+                              backgroundColor: "#003F62",
+                              color: "#fff",
+                              fontWeight: "200",
+                              fontSize: "13px",
+                              borderRadius: "8px",
+                              padding: "3px 4px",
+                            }}
+                            id="delete-tooltip"
+                          />
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

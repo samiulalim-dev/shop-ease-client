@@ -1,107 +1,100 @@
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { use, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { MdAddShoppingCart } from "react-icons/md";
-import { FaRegLightbulb } from "react-icons/fa";
-import { HiExclamationCircle } from "react-icons/hi2";
-import axios from "axios";
-import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
-import Swal from "sweetalert2";
 import { NumericFormat } from "react-number-format";
-import { AuthContext } from "../../../../AuthProvider/AuthProvider";
-import AddProductSkeleton from "../SellerSkeleton/AddProductSkeleton/AddProductSkeleton";
+import { HiExclamationCircle } from "react-icons/hi2";
+import { MdEditDocument } from "react-icons/md";
+import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import useAxios from "../../../../Hooks/useAxios/useAxios";
 
-const AddProduct = () => {
+const UpdateProducts = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [previewImages, setPreviewImages] = useState([]);
-  const [specs, setSpecs] = useState([{ key: "", value: "" }]);
-  const [price, setPrice] = useState("");
-  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+  const axiosInstance = useAxios();
 
-  const addSpecField = () => {
-    setSpecs([...specs, { key: "", value: "" }]);
-  };
-  const removeSpecField = (index) => {
-    const newSpecs = specs.filter((_, i) => i !== index);
-    setSpecs(newSpecs);
-  };
-  const handleSpecChange = (index, field, value) => {
-    const newSpecs = [...specs];
-    newSpecs[index][field] = value;
-    setSpecs(newSpecs);
-  };
+  const [price, setPrice] = useState("");
+  const [specs, setSpecs] = useState([{ key: "", value: "" }]);
+  const [previewImages, setPreviewImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  //  Fetch product data
+  const { data: product, isLoading } = useQuery({
+    queryKey: ["product", id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/products/${id}`);
+      return res.data;
+    },
+  });
+
+  // Initialize form and states when product loads
+  useEffect(() => {
+    if (product) {
+      reset({
+        productName: product.productName,
+        description: product.description,
+        category: product.category,
+        brand: product.brand,
+        price: product.price,
+        discount: product.discount,
+        stock: product.stock,
+        condition: product.condition,
+        shipping: product.shipping,
+      });
+      setPrice(product.price || "");
+      setSpecs(
+        product.specification?.length
+          ? product.specification
+          : [{ key: "", value: "" }]
+      );
+    }
+  }, [product, reset]);
+
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setPreviewImages(files.map((file) => URL.createObjectURL(file)));
-    setValue("images", files); // file save in react hook form
+    setValue("images", files);
   };
+
+  const addSpecField = () => setSpecs([...specs, { key: "", value: "" }]);
+  const removeSpecField = (index) =>
+    setSpecs(specs.filter((_, i) => i !== index));
+
+  const handleSpecChange = (index, field, value) => {
+    const updatedSpecs = [...specs];
+    updatedSpecs[index][field] = value;
+    setSpecs(updatedSpecs);
+  };
+
   const onSubmit = async (data) => {
-    setIsLoading(true);
-    const files = data.images;
-    const uploadedUrls = [];
     try {
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "product_images");
-        formData.append("cloud_name", "dwlpdzpui");
-
-        const res = await axios.post(
-          "https://api.cloudinary.com/v1_1/dwlpdzpui/image/upload",
-          formData
-        );
-        uploadedUrls.push(res.data.secure_url);
-      }
+      setLoading(true);
+      const updatedData = { ...data, price, specification: specs };
+      console.log(updatedData);
+      //   await axiosInstance.put(`/products/${id}`, updatedData);
+      //   toast.success("Product updated successfully!");
     } catch (error) {
-      console.error("Cloudinary upload failed", error);
-      toast.error(" Image upload failed");
-      setIsLoading(false);
-      return;
+      //   console.error(error);
+      //   toast.error("Failed to update product");
+    } finally {
+      //   setLoading(false);
     }
-    // console.log(uploadedUrls);
-
-    // simulate API request
-
-    const productData = {
-      ...data,
-      images: uploadedUrls,
-      specification: specs,
-    };
-    const cleanData = Object.fromEntries(
-      Object.entries(productData).filter(
-        ([_, v]) => v !== undefined && v !== ""
-      )
-    );
-    try {
-      const res = await axiosSecure.post("/productDetails", cleanData);
-      console.log(res.data);
-      if (res.data.data.insertedId) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Product Added Successfully!",
-          showConfirmButton: false,
-          timer: 1700,
-        });
-      }
-    } catch (error) {
-      toast.error("Failed to add product!");
-    }
-
-    // console.log(productData);
-    setIsLoading(false);
-    reset();
-    setSpecs([{ key: "", value: "" }]);
-    setPrice("");
-    setPreviewImages([]);
   };
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-10">
+        <span className="loading loading-spinner text-[#EDA415]"></span>
+        <p className="mt-2 text-gray-600 dark:text-white">Loading product...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-3xl mx-auto dark:bg-black/7 bg-white p-8 rounded-2xl shadow-lg mt-2">
+    <div className="max-w-3xl mx-auto">
       <h2 className="text-2xl md:text-3xl font-semibold text-[#003F62] dark:text-white flex items-center justify-center gap-2 mb-6">
-        <MdAddShoppingCart className="text-[#EDA415]" />
-        <span>Add New Product</span>
+        <MdEditDocument className="text-[#EDA415]" />
+        <span>Update Product</span>
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -112,7 +105,7 @@ const AddProduct = () => {
           </label>
           <input
             type="text"
-            {...register("productName", { required: true })}
+            {...register("productName")}
             placeholder="Enter product name"
             className="input input-bordered w-full mt-1"
           />
@@ -124,7 +117,7 @@ const AddProduct = () => {
             Description
           </label>
           <textarea
-            {...register("description", { required: true })}
+            {...register("description")}
             placeholder="Write a short description"
             className="textarea textarea-bordered w-full mt-1"
           ></textarea>
@@ -138,34 +131,31 @@ const AddProduct = () => {
               className="tooltip tooltip-right"
               data-tip="Hold CTRL (Windows) or CMD (Mac) and click to select multiple images"
             >
-              <span className="text-[#EDA415]  cursor-pointer">
-                <HiExclamationCircle size={20} />
-              </span>
+              <HiExclamationCircle size={20} className="text-[#EDA415]" />
             </div>
           </label>
+
           <input
             type="file"
             multiple
             accept="image/*"
             onChange={handleImageChange}
-            required
             className="file-input file-input-bordered w-full mt-1"
           />
 
-          {/* preview section */}
-          {previewImages.length > 0 && (
-            <div className="mt-3 grid grid-cols-3 sm:grid-cols-5 gap-3">
-              {previewImages.map((img, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={img}
-                    alt={`preview-${index}`}
-                    className="w-full h-20 object-cover rounded-md border"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="mt-3 grid grid-cols-3 sm:grid-cols-5 gap-3">
+            {(previewImages.length > 0
+              ? previewImages
+              : product?.images || []
+            ).map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`preview-${index}`}
+                className="w-full h-20 object-cover rounded-md border"
+              />
+            ))}
+          </div>
         </div>
 
         {/* Category & Brand */}
@@ -175,7 +165,7 @@ const AddProduct = () => {
               Category
             </label>
             <select
-              {...register("category", { required: true })}
+              {...register("category")}
               className="select select-bordered w-full mt-1"
             >
               <option value="">Select category</option>
@@ -224,7 +214,7 @@ const AddProduct = () => {
             <input
               type="number"
               {...register("discount")}
-              placeholder="Enter discount price"
+              placeholder="Enter discount"
               className="input input-bordered w-full mt-1"
             />
           </div>
@@ -238,7 +228,7 @@ const AddProduct = () => {
             </label>
             <input
               type="number"
-              {...register("stock", { required: true })}
+              {...register("stock")}
               placeholder="e.g. 50"
               className="input input-bordered w-full mt-1"
             />
@@ -248,7 +238,7 @@ const AddProduct = () => {
               Condition
             </label>
             <select
-              {...register("condition", { required: true })}
+              {...register("condition")}
               className="select select-bordered w-full mt-1"
             >
               <option>New</option>
@@ -256,7 +246,8 @@ const AddProduct = () => {
             </select>
           </div>
         </div>
-        {/* product specification */}
+
+        {/* Specifications */}
         <div>
           <label className="font-medium dark:text-white text-gray-600">
             Specifications (Optional)
@@ -298,29 +289,30 @@ const AddProduct = () => {
             + Add More
           </button>
         </div>
+
         {/* Shipping Info */}
         <div>
           <label className="font-medium dark:text-white text-gray-600">
             Shipping Info
           </label>
           <textarea
-            {...register("shipping", { required: true })}
+            {...register("shipping")}
             placeholder="Delivery details, charges, etc."
             className="textarea textarea-bordered w-full mt-1"
           ></textarea>
         </div>
 
-        {/* Submit Button */}
+        {/* Submit */}
         <div className="text-center">
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={loading}
             className="btn bg-[#EDA415] w-full hover:bg-orange-500 rounded-lg text-white font-semibold"
           >
-            {isLoading ? (
+            {loading ? (
               <span className="loading loading-spinner"></span>
             ) : (
-              "Add Product"
+              "Update Product"
             )}
           </button>
         </div>
@@ -329,4 +321,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default UpdateProducts;
