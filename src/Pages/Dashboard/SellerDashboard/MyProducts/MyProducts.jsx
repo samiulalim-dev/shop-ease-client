@@ -3,16 +3,18 @@ import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
 import { AuthContext } from "../../../../AuthProvider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import MyProductSkeleton from "../SellerSkeleton/MyProductSekelton/MyProductSkeleton";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { Link } from "react-router";
+import { TbCurrencyTaka } from "react-icons/tb";
 const MyProducts = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = use(AuthContext);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   //   console.log(search);
   const { data, isLoading, refetch, error, isError } = useQuery({
     queryKey: ["myProducts", user?.email, search, page],
@@ -28,6 +30,11 @@ const MyProducts = () => {
 
   const products = data?.products || [];
   const totalPages = data?.totalPages || 1;
+
+  const handleViewDetails = (product) => {
+    setSelectedProduct(product);
+    document.getElementById("product_details_modal").showModal();
+  };
 
   if (isError) return <p>Error: {error.message}</p>;
   //   console.log(products);
@@ -94,7 +101,14 @@ const MyProducts = () => {
                   <td className="max-w-[80px] sm:max-w-[120px] md:max-w-[200px] truncate">
                     {item.productName}
                   </td>
-                  <td>${item.price}</td>
+                  <td>
+                    <span className="flex items-center ">
+                      <span className="text-xl">
+                        <TbCurrencyTaka></TbCurrencyTaka>
+                      </span>
+                      {Number(item.price).toLocaleString("en-IN")}
+                    </span>
+                  </td>
                   <td>
                     {item.stock}
                     <span className=" ml-1">Pcs</span>
@@ -112,6 +126,26 @@ const MyProducts = () => {
                   </td>
                   <td>
                     <div className=" cursor-pointer items-center flex gap-2 sm:gap-3 ">
+                      <button onClick={() => handleViewDetails(item)}>
+                        <span
+                          data-tooltip-id="edit-tooltip"
+                          data-tooltip-content="View Products"
+                          className="text-2xl cursor-pointer"
+                        >
+                          <FaEye />
+                          <Tooltip
+                            style={{
+                              backgroundColor: "#003F62",
+                              color: "#fff",
+                              fontWeight: "200",
+                              fontSize: "13px",
+                              borderRadius: "8px",
+                              padding: "3px 4px",
+                            }}
+                            id="edit-tooltip"
+                          />
+                        </span>
+                      </button>
                       <Link to={`/dashboard/updateProducts/${item._id}`}>
                         <span
                           data-tooltip-id="edit-tooltip"
@@ -173,9 +207,9 @@ const MyProducts = () => {
         {Array.from({ length: totalPages }, (_, i) => i + 1)
           .filter(
             (num) =>
-              num === 1 || // প্রথম পেজ
-              num === totalPages || // শেষ পেজ
-              (num >= page - 1 && num <= page + 1) // current পেজের আশেপাশে
+              num === 1 ||
+              num === totalPages ||
+              (num >= page - 1 && num <= page + 1)
           )
           .map((num, idx, arr) => {
             const prev = arr[idx - 1];
@@ -203,6 +237,61 @@ const MyProducts = () => {
           Next
         </button>
       </div>
+      {/*  View Product Modal */}
+      <dialog
+        id="product_details_modal"
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box dark:bg-black text-black dark:text-white">
+          {selectedProduct ? (
+            <>
+              <h3 className="font-bold text-xl dark:text-white text-[#003F62] mb-3">
+                {selectedProduct.productName}
+              </h3>
+              <img
+                src={selectedProduct.images?.[0]}
+                alt={selectedProduct.productName}
+                className="w-40 h-40 object-cover rounded-md mx-auto mb-4"
+              />
+              <div>
+                <div>
+                  <p>
+                    <b>Category:</b> {selectedProduct.category}
+                  </p>
+                  <p className="flex  items-center">
+                    <b>Price:</b>
+                    <TbCurrencyTaka></TbCurrencyTaka>
+                    {Number(selectedProduct.price).toLocaleString("en-IN")}
+                  </p>
+                  <p>
+                    <b>Stock:</b> {selectedProduct.stock} pcs
+                  </p>
+
+                  {selectedProduct.specification?.length > 1 && (
+                    <div className="mt-3">
+                      <h4 className="font-semibold mb-1">Specifications:</h4>
+                      <ul className="list-disc list-inside">
+                        {selectedProduct.specification.map((spec, i) => (
+                          <li key={i}>
+                            {spec.key}: {spec.value}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="modal-action">
+                <form method="dialog">
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+      </dialog>
     </div>
   );
 };
