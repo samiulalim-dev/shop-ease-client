@@ -10,10 +10,15 @@ const SellerPrivateRoute = ({ children }) => {
   const location = useLocation();
   // console.log(location.pathname);
   if (isRoleLoading) {
+    if (location.pathname.startsWith("/dashboard/updateProducts")) {
+      return <AddProductSkeleton />;
+    }
     switch (location.pathname) {
       case "/dashboard/add-product":
         return <AddProductSkeleton />;
       case "/dashboard/my-products":
+        return <MyProductSkeleton />;
+      case "/dashboard/UpdateProducts":
         return <MyProductSkeleton />;
       default:
         return <span>Loading Please Wait...</span>;

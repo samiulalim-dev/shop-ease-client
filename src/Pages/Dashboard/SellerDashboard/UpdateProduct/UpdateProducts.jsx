@@ -10,12 +10,13 @@ import useAxiosSecure from "../../../../Hooks/AxiosSecure/useAxiosSecure";
 import axios from "axios";
 import useAxios from "../../../../Hooks/useAxios/useAxios";
 import Swal from "sweetalert2";
+import AddProductSkeleton from "../SellerSkeleton/AddProductSkeleton/AddProductSkeleton";
 
 const UpdateProducts = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const axiosInstance = useAxios();
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -28,7 +29,7 @@ const UpdateProducts = () => {
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/products/${id}`);
+      const res = await axiosSecure.get(`/products/${id}`);
       return res.data;
     },
   });
@@ -83,7 +84,6 @@ const UpdateProducts = () => {
     try {
       let uploadedUrls = [];
 
-      // যদি নতুন ছবি upload করা হয়, তাহলে cloudinary তে পাঠানো হবে
       if (data.images && data.images.length > 0) {
         const uploadPromises = Array.from(data.images).map(async (file) => {
           const formData = new FormData();
@@ -100,7 +100,6 @@ const UpdateProducts = () => {
 
         uploadedUrls = await Promise.all(uploadPromises);
       } else {
-        // পুরনো image গুলোই থাকবে
         uploadedUrls = product?.images || [];
       }
 
@@ -149,12 +148,7 @@ const UpdateProducts = () => {
 
   // ✅ Loading skeleton
   if (isLoading) {
-    return (
-      <div className="text-center py-10">
-        <span className="loading loading-spinner text-[#EDA415]"></span>
-        <p className="mt-2 text-gray-600 dark:text-white">Loading product...</p>
-      </div>
-    );
+    return <AddProductSkeleton></AddProductSkeleton>;
   }
 
   return (
