@@ -9,6 +9,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { Link } from "react-router";
 import { TbCurrencyTaka } from "react-icons/tb";
+import Swal from "sweetalert2";
 const MyProducts = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = use(AuthContext);
@@ -34,6 +35,28 @@ const MyProducts = () => {
   const handleViewDetails = (product) => {
     setSelectedProduct(product);
     document.getElementById("product_details_modal").showModal();
+  };
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.delete(`/deleteProducts/${id}`);
+          Swal.fire("Deleted!", "Your product has been deleted.", "success");
+          refetch(); // react-query refetch to update the list
+        } catch (error) {
+          console.error(error);
+          Swal.fire("Error!", "Failed to delete product.", "error");
+        }
+      }
+    });
   };
 
   if (isError) return <p>Error: {error.message}</p>;
@@ -166,7 +189,10 @@ const MyProducts = () => {
                           />
                         </span>
                       </Link>
-                      <button>
+                      <button
+                        className="cursor-pointer"
+                        onClick={() => handleDelete(item._id)}
+                      >
                         <span
                           data-tooltip-id="delete-tooltip"
                           data-tooltip-content="Delete Products"

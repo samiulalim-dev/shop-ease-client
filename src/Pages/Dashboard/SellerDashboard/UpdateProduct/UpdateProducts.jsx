@@ -59,7 +59,7 @@ const UpdateProducts = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
-  // ✅ Image handle
+  //  Image handle
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
@@ -67,7 +67,7 @@ const UpdateProducts = () => {
     setValue("images", files);
   };
 
-  // ✅ Specs handlers
+  //  Specs handlers
   const addSpecField = () => setSpecs([...specs, { key: "", value: "" }]);
   const removeSpecField = (index) =>
     setSpecs(specs.filter((_, i) => i !== index));
@@ -78,7 +78,7 @@ const UpdateProducts = () => {
     setSpecs(updatedSpecs);
   };
 
-  // ✅ Submit handler
+  //  Submit handler
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -146,7 +146,7 @@ const UpdateProducts = () => {
     }
   };
 
-  // ✅ Loading skeleton
+  //  Loading skeleton
   if (isLoading) {
     return <AddProductSkeleton></AddProductSkeleton>;
   }
