@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaSpinner } from "react-icons/fa";
 import useAxios from "../../Hooks/useAxios/useAxios";
+import ExploreProductsSkeleton from "../../Shared/ExploreProductSkeleton/ExploreProductSkeleton";
+import { Link } from "react-router";
 
 const ExploreProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const limit = 12;
+  const [limit, setLimit] = useState(15);
+
   const axiosInstance = useAxios();
 
   // Fetch products from backend
@@ -35,69 +38,61 @@ const ExploreProducts = () => {
 
       {/* Products Grid */}
       {isLoading ? (
-        <div className="flex justify-center py-10">
-          <FaSpinner className="animate-spin text-4xl text-[#EDA415]" />
-        </div>
+        <ExploreProductsSkeleton></ExploreProductsSkeleton>
       ) : (
         <div>
           {products.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
               {products.map((product) => (
-                <div
-                  key={product._id}
-                  className="bg-white dark:bg-black/50 z-10 rounded-xl shadow-xl hover:shadow-xl transition sm:p-4 flex flex-col justify-between"
-                >
-                  {/* Product Image Section */}
-                  <div className="relative w-full overflow-hidden rounded-bl-none rounded-br-none rounded-tl-lg rounded-tr-lg sm:rounded-lg group">
-                    {/* Discount Badge */}
-                    {product.discount && (
-                      <span className="absolute top-2 z-10 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                        -{product.discount}%
-                      </span>
-                    )}
+                <Link key={product._id} to={`/productDetails/${product._id}`}>
+                  <div className="bg-white dark:bg-black/50 z-10 cursor-pointer rounded-xl shadow-xl hover:shadow-2xl transition sm:p-4 flex flex-col justify-between">
+                    {/* Product Image Section */}
+                    <div className="relative w-full overflow-hidden rounded-bl-none rounded-br-none rounded-tl-lg rounded-tr-lg sm:rounded-lg group">
+                      {/* Discount Badge */}
+                      {product.discount && (
+                        <span className="absolute top-2 z-10 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                          -{product.discount}%
+                        </span>
+                      )}
 
-                    {/* Product Image */}
-                    <div className="overflow-hidden">
-                      <img
-                        src={product.images?.[0]}
-                        alt={product.productName}
-                        className="w-full  h-48 object-cover cursor-pointer transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Product Info Section */}
-                  <div className="sm:mt-4 mt-2 flex flex-col justify-between flex-grow">
-                    <h3 className="sm:font-semibold dark:text-white text-gray-800 px-1 sm:px-0 sm:text-lg truncate">
-                      {product.productName}
-                    </h3>
-                    <p className="text-gray-500 px-1 sm:px-0 dark:text-white text-sm mt-1 line-clamp-2">
-                      {product.description || "No description available."}
-                    </p>
-
-                    {/* Price Section */}
-                    <div className="flex px-1 sm:px-0 justify-between items-center mt-2 sm:mt-3">
-                      {/* Original Price */}
-                      <p className="text-gray-400  line-through text-[13px] sm:text-[17px]">
-                        ৳{Number(product.price).toLocaleString("en-IN")}
-                      </p>
-
-                      {/* Discounted Price */}
-                      <p className="text-[#EDA415] font-bold text-sm sm:text-lg">
-                        ৳
-                        {Math.ceil(
-                          product.price -
-                            (product.price * (product.discount || 0)) / 100
-                        ).toLocaleString("en-IN")}
-                      </p>
+                      {/* Product Image */}
+                      <div className="overflow-hidden">
+                        <img
+                          src={product.images?.[0]}
+                          alt={product.productName}
+                          className="w-full  h-48 object-cover cursor-pointer transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
                     </div>
 
-                    {/* Add to Cart Button */}
-                    <button className="px-5 mx-1 sm:mx-0 mb-3 mt-2 sm:mt-0 sm:mb-0 cursor-pointer py-2  border-2 text-[#EDA415] border-[#EDA415] hover:text-white hover:bg-orange-500 rounded-lg dark:text-white font-semibold shadow-md transition">
-                      Add to Cart
-                    </button>
+                    {/* Product Info Section */}
+                    <div className="sm:mt-4 mt-2 flex flex-col justify-between flex-grow">
+                      <h3 className="sm:font-semibold dark:text-white text-gray-800 px-1 sm:px-0 sm:text-lg truncate">
+                        {product.productName}
+                      </h3>
+                      <p className="text-gray-500 px-1 sm:px-0 dark:text-white text-sm mt-1 line-clamp-3">
+                        {product.description || "No description available."}
+                      </p>
+
+                      {/* Price Section */}
+                      <div className="flex px-1 sm:px-0 justify-between items-center my-3 sm:my-0 sm:mt-3">
+                        {/* Original Price */}
+                        <p className="text-gray-400  line-through text-[13px] sm:text-[17px]">
+                          ৳{Number(product.price).toLocaleString("en-IN")}
+                        </p>
+
+                        {/* Discounted Price */}
+                        <p className="text-[#EDA415] font-bold text-sm sm:text-lg">
+                          ৳
+                          {Math.ceil(
+                            product.price -
+                              (product.price * (product.discount || 0)) / 100
+                          ).toLocaleString("en-IN")}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
@@ -108,36 +103,57 @@ const ExploreProducts = () => {
         </div>
       )}
 
-      {/* Pagination */}
+      {/* pagination */}
       <div className="flex justify-center mt-8 space-x-2">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 text-black cursor-pointer dark:text-white py-1 border border-black dark:border-white rounded-lg disabled:opacity-50"
+          className="px-3 cursor-pointer py-1 border rounded-lg dark:text-white border-black dark:border-white disabled:opacity-50"
         >
           Prev
         </button>
 
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 cursor-pointer border rounded-lg ${
-              currentPage === i + 1
-                ? "bg-[#EDA415] text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            {i + 1}
-          </button>
-        ))}
+        {/* Page Numbers */}
+        {Array.from({ length: totalPages }, (_, i) => i + 1)
+          .filter((page) => {
+            // Always show first & last page
+            if (page === 1 || page === totalPages) return true;
+            // Show 2 pages before and after current page
+            if (page >= currentPage - 1 && page <= currentPage + 1) return true;
+            return false;
+          })
+          .map((page, index, filteredPages) => {
+            // Add "..." when there's a gap between pages
+            const prevPage = filteredPages[index - 1];
+            const showDots = prevPage && page - prevPage > 1;
+
+            return (
+              <React.Fragment key={page}>
+                {showDots && (
+                  <span className="px-2 text-gray-500 dark:text-white">
+                    ...
+                  </span>
+                )}
+                <button
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-3 py-1 border rounded-lg cursor-pointer ${
+                    currentPage === page
+                      ? "bg-[#EDA415] text-white border-[#EDA415]"
+                      : "bg-white dark:bg-black/30 text-gray-700 dark:text-white hover:bg-gray-100"
+                  }`}
+                >
+                  {page}
+                </button>
+              </React.Fragment>
+            );
+          })}
 
         <button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-3 py-1  border text-black dark:text-white cursor-pointer border-black dark:border-white rounded-lg disabled:opacity-50"
+          className="px-3 py-1 border cursor-pointer rounded-lg dark:text-white border-black dark:border-white disabled:opacity-50"
         >
           Next
         </button>

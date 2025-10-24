@@ -25,6 +25,7 @@ import SalesReport from "../Pages/Dashboard/SellerDashboard/SalesReport/SalesRep
 import MyProducts from "../Pages/Dashboard/SellerDashboard/MyProducts/MyProducts";
 import ReportAndAnalysis from "../Pages/Dashboard/AdminDashboard/ReportAndAnalysis/ReportAndAnalysis";
 import UpdateProducts from "../Pages/Dashboard/SellerDashboard/UpdateProduct/UpdateProducts";
+import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path: "/forbidden",
         Component: ForbiddenPage,
+      },
+      {
+        path: "/productDetails/:id",
+        Component: ProductDetails,
       },
     ],
   },
