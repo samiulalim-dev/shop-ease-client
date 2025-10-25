@@ -59,50 +59,49 @@ const ProductReview = ({ productId }) => {
       <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
 
       {/* Review Form */}
-      {user && (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-3 mb-6"
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-3 mb-6"
+      >
+        {/* Comment */}
+        <textarea
+          {...register("comment", { required: true })}
+          placeholder="Write your review..."
+          className="textarea textarea-bordered w-full"
+        ></textarea>
+
+        {/* Star Rating */}
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <FaStar
+              key={star}
+              size={24}
+              className={`cursor-pointer ${
+                (hoverRating || selectedRating) >= star
+                  ? "text-yellow-400"
+                  : "text-gray-300"
+              }`}
+              onMouseEnter={() => setHoverRating(star)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setSelectedRating(star)}
+            />
+          ))}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="lg:px-5 px-2 cursor-pointer py-2 md:w-1/3 sm:1/2  lg:w-1/5 bg-[#EDA415] hover:bg-orange-500 rounded-lg text-white font-semibold shadow-md transition"
+          disabled={loading}
         >
-          {/* Comment */}
-          <textarea
-            {...register("comment", { required: true })}
-            placeholder="Write your review..."
-            className="textarea textarea-bordered w-full"
-          ></textarea>
-
-          {/* Star Rating */}
-          <div className="flex gap-1">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <FaStar
-                key={star}
-                size={24}
-                className={`cursor-pointer ${
-                  (hoverRating || selectedRating) >= star
-                    ? "text-yellow-400"
-                    : "text-gray-300"
-                }`}
-                onMouseEnter={() => setHoverRating(star)}
-                onMouseLeave={() => setHoverRating(0)}
-                onClick={() => setSelectedRating(star)}
-              />
-            ))}
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="btn bg-[#EDA415] text-white w-1/4 mt-2 flex items-center justify-center"
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </form>
-      )}
+          {loading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            "Submit Review"
+          )}
+        </button>
+      </form>
 
       {/* Reviews List */}
       {isLoading ? (
