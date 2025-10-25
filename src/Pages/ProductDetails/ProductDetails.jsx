@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import useAxios from "../../Hooks/useAxios/useAxios";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import ProductDetailsSkeleton from "../../Shared/ProductDetailSkeleton/ProductDetailSkeleton";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -29,7 +30,7 @@ const ProductDetails = () => {
     }
   }, [product]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <ProductDetailsSkeleton></ProductDetailsSkeleton>;
   if (isError) return <p>Something went wrong!</p>;
 
   return (
