@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import useAxios from "../../Hooks/useAxios/useAxios";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import ProductDetailsSkeleton from "../../Shared/ProductDetailSkeleton/ProductDetailSkeleton";
+import ProductReview from "../ProductReview/ProductReview";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -127,7 +128,7 @@ const ProductDetails = () => {
             </div>
 
             <>
-              {product.specification && (
+              {product.specification.length > 1 && (
                 <div className="">
                   <h3 className="text-xl mb-3 font-semibold text-gray-700 dark:text-white">
                     Key Features
@@ -207,8 +208,9 @@ const ProductDetails = () => {
           className="tab focus:text-[#EDA415] font-semibold"
           aria-label="Reviews"
         />
+        {/* product review */}
         <div className="tab-content shadow-md rounded-2xl mt-6 mb-16 border-base-300 bg-base-100 p-7">
-          No Reviews Yet
+          <ProductReview productId={product._id}></ProductReview>
         </div>
       </div>
     </div>
