@@ -39,32 +39,41 @@ const CategorySlider = () => {
         }}
         className="mySwiper"
       >
-        {/* bg-blue-500 text-white rounded-lg p-6 shadow-md text-center */}
-        {categories.map((item) => (
-          <SwiperSlide key={item._id}>
-            <div className="px-3">
-              <div className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-gray-400 rounded-2xl shadow hover:shadow-md transition">
-                {/* Left: Image */}
-                <img
-                  src={item.image?.[0] || "https://via.placeholder.com/64"}
-                  alt={item.name}
-                  className="w-16 h-16 object-contain"
-                />
+        {isLoading ? (
+          [...Array(3)].map((_, i) => (
+            <SwiperSlide key={i}>
+              <div className="h-24 bg-gray-200 rounded-2xl animate-pulse"></div>
+            </SwiperSlide>
+          ))
+        ) : (
+          <>
+            {categories.map((item) => (
+              <SwiperSlide key={item._id}>
+                <div className="px-3">
+                  <div className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-gray-400 rounded-2xl shadow hover:shadow-md transition">
+                    {/* Left: Image */}
+                    <img
+                      src={item.image?.[0] || "https://via.placeholder.com/64"}
+                      alt={item.name}
+                      className="w-16 h-16 object-contain"
+                    />
 
-                <div className="divider divider-horizontal divider-start"></div>
-                {/* Right: Info */}
-                <div>
-                  <h3 className="font-semibold text-lg dark:text-white text-[#003F62]">
-                    {item._id}
-                  </h3>
-                  <p className="text-sm dark:text-white text-[#003F62]">
-                    ( {item.count} items )
-                  </p>
+                    <div className="divider divider-horizontal divider-start"></div>
+                    {/* Right: Info */}
+                    <div>
+                      <h3 className="font-semibold text-lg dark:text-white text-[#003F62]">
+                        {item._id}
+                      </h3>
+                      <p className="text-sm dark:text-white text-[#003F62]">
+                        ( {item.count} items )
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+              </SwiperSlide>
+            ))}
+          </>
+        )}
       </Swiper>
 
       {/* Custom Next Button */}
