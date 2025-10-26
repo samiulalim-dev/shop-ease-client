@@ -3,42 +3,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import useAxios from "../../Hooks/useAxios/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const CategorySlider = () => {
   const swiperRef = useRef(null);
-
-  const items = [
-    {
-      id: 1,
-      name: "Electronics",
-      items: 120,
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgyHDp3pcSY53jV1UBNopEMLB-XEFtN7mojQ&s",
+  const axiosInstance = useAxios();
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: ["categoriesWithCount"],
+    queryFn: async () => {
+      const res = await axiosInstance.get("/categoriesWithCount");
+      return res.data;
     },
-    {
-      id: 2,
-      name: "Clothing",
-      items: 250,
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp0PJTSS___Xt_lf0HbLczTxSmhVGH3GqnAA&s",
-    },
-    {
-      id: 3,
-      name: "Shoes",
-      items: 95,
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa4jB31RljtggpoP69sSnPHwoSIvfDLqg5MA&s",
-    },
-    {
-      id: 4,
-      name: "Accessories",
-      items: 150,
-      img: "https://www.shutterstock.com/image-photo/make-products-pink-background-top-600nw-2197448551.jpg",
-    },
-    {
-      id: 5,
-      name: "Home & Living",
-      items: 75,
-      img: "https://img.freepik.com/free-photo/full-shot-women-watching-movie-laptop_23-2149266789.jpg?semt=ais_hybrid&w=740&q=80",
-    },
-  ];
+  });
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 my-8 md:my-12">
@@ -63,13 +40,13 @@ const CategorySlider = () => {
         className="mySwiper"
       >
         {/* bg-blue-500 text-white rounded-lg p-6 shadow-md text-center */}
-        {items.map((item) => (
-          <SwiperSlide key={item.id}>
+        {categories.map((item) => (
+          <SwiperSlide key={item._id}>
             <div className="px-3">
-              <div className="flex items-center gap-4 p-4 bg-white border border-gray-400 rounded-2xl shadow hover:shadow-md transition">
+              <div className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-gray-400 rounded-2xl shadow hover:shadow-md transition">
                 {/* Left: Image */}
                 <img
-                  src={item.img}
+                  src={item.image?.[0] || "https://via.placeholder.com/64"}
                   alt={item.name}
                   className="w-16 h-16 object-contain"
                 />
@@ -77,11 +54,11 @@ const CategorySlider = () => {
                 <div className="divider divider-horizontal divider-start"></div>
                 {/* Right: Info */}
                 <div>
-                  <h3 className="font-semibold text-lg text-[#003F62]">
-                    {item.name}
+                  <h3 className="font-semibold text-lg dark:text-white text-[#003F62]">
+                    {item._id}
                   </h3>
-                  <p className="text-sm text-[#003F62]">
-                    ( {item.items} items )
+                  <p className="text-sm dark:text-white text-[#003F62]">
+                    ( {item.count} items )
                   </p>
                 </div>
               </div>
