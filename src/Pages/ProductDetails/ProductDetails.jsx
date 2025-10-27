@@ -5,7 +5,8 @@ import useAxios from "../../Hooks/useAxios/useAxios";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import ProductDetailsSkeleton from "../../Shared/ProductDetailSkeleton/ProductDetailSkeleton";
 import ProductReview from "../ProductReview/ProductReview";
-
+import { CiHeart } from "react-icons/ci";
+import { IoIosGitCompare } from "react-icons/io";
 const ProductDetails = () => {
   const { id } = useParams();
   const [mainImage, setMainImage] = useState("");
@@ -154,7 +155,7 @@ const ProductDetails = () => {
             <div className="dark:text-white">{product.shipping}</div>
 
             {/* Add to Cart Section */}
-            <div className="mt-4 flex flex-row items-center gap-3 ">
+            <div className="mt-3 flex flex-row items-center gap-3 ">
               {/* Quantity Buttons */}
               <div className="flex items-center border border-[#EDA415] rounded-lg overflow-hidden">
                 <button
@@ -184,6 +185,24 @@ const ProductDetails = () => {
               <button className=" px-6 py-2 bg-[#EDA415] text-white rounded-lg hover:bg-orange-500 transition">
                 Add to Cart
               </button>
+            </div>
+            {/* add to wishlist */}
+
+            <div className="flex items-center gap-5">
+              <div className="flex  items-center gap-2">
+                <CiHeart className="text-2xl  cursor-pointer dark:text-white" />
+
+                <span className="dark:text-white hover:text-[#EDA415] cursor-pointer hover:underline">
+                  Add to Wishlist
+                </span>
+              </div>
+              <div className="flex  items-center gap-2">
+                <IoIosGitCompare className="text-2xl  cursor-pointer dark:text-white" />
+
+                <span className="dark:text-white hover:text-[#EDA415] cursor-pointer hover:underline">
+                  Add to Compare
+                </span>
+              </div>
             </div>
           </div>
         </div>

@@ -7,10 +7,13 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Link, useNavigate } from "react-router";
 import Loading from "../../Shared/LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
+import useUserRole from "../../Hooks/useUserRole/useUserRole";
+import Skeleton from "react-loading-skeleton";
 
 const StartNavbar = () => {
   const { user, signOutUser, loading } = use(AuthContext);
   const navigate = useNavigate();
+  const { role, isRoleLoading } = useUserRole();
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
@@ -104,7 +107,14 @@ const StartNavbar = () => {
                     to="/dashboard"
                     className="w-full py-2 text-sm font-medium text-[#003F62] hover:bg-[#f5f5f5] rounded-lg"
                   >
-                    <FaArrowLeft /> Go to Dashboard
+                    <FaArrowLeft /> Go to{" "}
+                    {isRoleLoading ? (
+                      <Skeleton width={70} height={18} borderRadius={8} />
+                    ) : role === "user" ? (
+                      "Account"
+                    ) : (
+                      "Dashboard"
+                    )}
                   </Link>
                 </li>
                 <li>
